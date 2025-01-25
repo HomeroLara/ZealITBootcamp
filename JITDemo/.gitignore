@@ -1,0 +1,59 @@
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# User-specific directories
+**/.vs/
+**/.vscode/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer directories
+**/obj/
+**/bin/
+
+**/JITDemo/bin/
+**/JITDemo/obj/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+**/artifacts/
+
+# ASP.NET files
+**/wwwroot/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# JetBrains Rider
+**/.idea/
+
+# .NET build output
+**/bin/
+**/obj/
+**/JITDemo/bin/
+**/JITDemo/obj/
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+
+# VS for Mac
+**/.vscode/
+**/.idea/
+
+# JetBrains Rider
+**/.idea/
+
+# User-specific configuration files
+.vsconfig
