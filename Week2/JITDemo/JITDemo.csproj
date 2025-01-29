@@ -5,6 +5,14 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <TieredCompilation>true</TieredCompilation>
+        <TieredCompilationQuickJit>true</TieredCompilationQuickJit>
+        <TieredCompilationQuickJitForLoops>true</TieredCompilationQuickJitForLoops>
+        <PublishReadyToRun>false</PublishReadyToRun>
     </PropertyGroup>
+
+    <ItemGroup>
+      
+    </ItemGroup>
 
 </Project>
