@@ -1,51 +1,73 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 
 class Program
 {
     static void Main()
     {
-        Console.WriteLine("Garbage Collection Demonstration");
-        Console.WriteLine($"Initial Memory: {GC.GetTotalMemory(false) / 1024.0:F2} KB");
+        Console.WriteLine("Starting GC demonstration...\n");
 
-        // Step 1: Allocate a large number of objects
-        Console.WriteLine("\nAllocating memory...");
-        CreateObjects();
+        // Print initial memory info
+        PrintGCInfo();
 
-        Console.WriteLine($"Memory after allocation: {GC.GetTotalMemory(false) / 1024.0:F2} KB");
+        // Step 1: Allocate short-lived objects (Gen 0)
+        AllocateShortLivedObjects();
+        PrintGCInfo();
 
-        // Step 2: Collect garbage in Generation 0
-        Console.WriteLine("\nForcing Generation 0 GC...");
-        GC.Collect(0);
+        // Step 2: Allocate long-lived objects (Gen 1 and Gen 2)
+        AllocateLongLivedObjects();
+        PrintGCInfo();
+
+        // Step 3: Trigger explicit garbage collection
+        Console.WriteLine("\nForcing GC Collection...");
+        GC.Collect();
         GC.WaitForPendingFinalizers();
-        Console.WriteLine($"Memory after Gen 0 GC: {GC.GetTotalMemory(false) / 1024.0:F2} KB");
+        PrintGCInfo();
 
-        // Step 3: Collect garbage in Generation 1
-        Console.WriteLine("\nForcing Generation 1 GC...");
-        GC.Collect(1);
+        // Step 4: Force Full GC (including Gen 2)
+        Console.WriteLine("\nForcing Full GC Collection (Gen 2)...");
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
         GC.WaitForPendingFinalizers();
-        Console.WriteLine($"Memory after Gen 1 GC: {GC.GetTotalMemory(false) / 1024.0:F2} KB");
+        PrintGCInfo();
 
-        // Step 4: Collect garbage in Generation 2
-        Console.WriteLine("\nForcing Full GC (Generation 2)...");
-        GC.Collect(2);
-        GC.WaitForPendingFinalizers();
-        Console.WriteLine($"Memory after Full GC: {GC.GetTotalMemory(false) / 1024.0:F2} KB");
-
-        Console.WriteLine("\nGarbage Collection Stats:");
-        Console.WriteLine($"Gen 0 collections: {GC.CollectionCount(0)}");
-        Console.WriteLine($"Gen 1 collections: {GC.CollectionCount(1)}");
-        Console.WriteLine($"Gen 2 collections: {GC.CollectionCount(2)}");
+        Console.WriteLine("\nGC demonstration complete!");
     }
 
-    static void CreateObjects()
+    static void AllocateShortLivedObjects()
     {
-        // Create many small objects that will initially be in Gen 0
-        for (int i = 0; i < 100_000; i++)
+        Console.WriteLine("Allocating short-lived objects (Gen 0)...");
+
+        for (int i = 0; i < 10000; i++)
         {
-            var smallObj = new byte[1024]; // 1 KB per object
+            byte[] temp = new byte[1024]; // Allocate 1 KB
         }
 
-        // Create a large object that will be allocated on the Large Object Heap (LOH)
-        var largeObj = new byte[10 * 1024 * 1024]; // 10 MB object
+        Console.WriteLine("Short-lived objects created.");
+    }
+
+    static void AllocateLongLivedObjects()
+    {
+        Console.WriteLine("Allocating long-lived objects (Gen 1 and Gen 2)...");
+
+        List<byte[]> longLivedObjects = new List<byte[]>();
+
+        for (int i = 0; i < 100; i++)
+        {
+            byte[] largeObject = new byte[1024 * 1024]; // Allocate 1 MB (Large Object Heap)
+            longLivedObjects.Add(largeObject);
+        }
+
+        Console.WriteLine("Long-lived objects created.");
+    }
+
+    static void PrintGCInfo()
+    {
+        Console.WriteLine("\n--- Garbage Collection Info ---");
+        Console.WriteLine($"Generation 0: {GC.CollectionCount(0)} collections");
+        Console.WriteLine($"Generation 1: {GC.CollectionCount(1)} collections");
+        Console.WriteLine($"Generation 2: {GC.CollectionCount(2)} collections");
+        Console.WriteLine($"Total Memory: {GC.GetTotalMemory(false) / 1024.0:F2} KB");
+        Console.WriteLine("--------------------------------\n");
     }
 }
