@@ -16,4 +16,13 @@
       <Folder Include="obj\Debug\net8.0\" />
     </ItemGroup>
 
+    <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+        <DefineConstants>WINDOWS</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(OS)' == 'Linux'">
+        <DefineConstants>LINUX</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(OS)' == 'OSX'">
+        <DefineConstants>MACOS</DefineConstants>
+    </PropertyGroup>
 </Project>

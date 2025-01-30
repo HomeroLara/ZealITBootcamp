@@ -1,39 +1,96 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using GCDemo;
 
 class Program
 {
-    static void Main()
+    static async Task Main()
     {
-        Console.WriteLine("Starting GC demonstration...\n");
+        Run2();
 
-        // Print initial memory info
-        PrintGCInfo();
+        Console.WriteLine("\nLeaving 'Run'...");
 
-        // Step 1: Allocate short-lived objects (Gen 0)
-        AllocateShortLivedObjects();
-        PrintGCInfo();
-
-        // Step 2: Allocate long-lived objects (Gen 1 and Gen 2)
-        AllocateLongLivedObjects();
-        PrintGCInfo();
-
-        // Step 3: Trigger explicit garbage collection
-        Console.WriteLine("\nForcing GC Collection...");
         GC.Collect();
         GC.WaitForPendingFinalizers();
-        PrintGCInfo();
-
-        // Step 4: Force Full GC (including Gen 2)
-        Console.WriteLine("\nForcing Full GC Collection (Gen 2)...");
-        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
-        GC.WaitForPendingFinalizers();
-        PrintGCInfo();
-
-        Console.WriteLine("\nGC demonstration complete!");
+        // Console.WriteLine("Starting GC demonstration...\n");
+        //
+        // // Print initial memory info
+        // PrintGCInfo();
+        //
+        // // Step 1: Allocate short-lived objects (Gen 0)
+        // AllocateShortLivedObjects();
+        // PrintGCInfo();
+        //
+        // // Step 2: Allocate long-lived objects (Gen 1 and Gen 2)
+        // AllocateLongLivedObjects();
+        // PrintGCInfo();
+        //
+        // // Step 3: Trigger explicit garbage collection
+        // Console.WriteLine("\nForcing GC Collection...");
+        // GC.Collect();
+        // GC.WaitForPendingFinalizers();
+        // PrintGCInfo();
+        //
+        // // Step 4: Force Full GC (including Gen 2)
+        // Console.WriteLine("\nForcing Full GC Collection (Gen 2)...");
+        // GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
+        // GC.WaitForPendingFinalizers();
+        // PrintGCInfo();
+        //
+        // Console.WriteLine("\nGC demonstration complete!");
     }
 
+    static void ShortLives (Person parent)
+    {
+        Person fred = new Person
+        {
+            Name = "Fred",
+            ChildOne = new Person { Name = "Bamm-Bamm" }
+        };
+
+        parent.ChildTwo = fred.ChildOne;
+    }
+
+    static void Run()
+    {
+        Person wilma = new Person 
+        { 
+            Name = "Wilma",
+            ChildOne = new Person { Name = "Pebbles"}
+        };
+
+        ShortLives(wilma);
+
+        Console.WriteLine("Leaving 'ShortLives'...");
+
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+    }
+    
+    static void Run1()
+    {
+        //using
+       var pmn = new PureManagedClass();
+       pmn.StartWriting();
+    }
+    
+    static void Run2()
+    {
+        //using
+        var mc = new MixedClass();
+        mc.StartWriting();
+    }
+    
+    static void CreateObjects()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            var obj = new MyClass(); // Store reference in a local variable
+            obj = null; // Explicitly remove reference to make it eligible for GC
+        }
+    }
+    
     static void AllocateShortLivedObjects()
     {
         Console.WriteLine("Allocating short-lived objects (Gen 0)...");

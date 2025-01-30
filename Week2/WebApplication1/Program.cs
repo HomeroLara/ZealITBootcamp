@@ -52,6 +52,15 @@ app.MapGet("/weatherforecast", (IService1 service1) =>
 // Add a new endpoint to demonstrate JIT compilation
 app.MapGet("/jitdemo", () =>
     {
+        if (OperatingSystem.IsWindows())
+            Console.WriteLine("Running on Windows");
+        else if (OperatingSystem.IsLinux())
+            Console.WriteLine("Running on Linux");
+        else if (OperatingSystem.IsMacOS())
+            Console.WriteLine("Running on macOS");
+        
+
+        
         const int numSteps = 100_000_000; // Increase this for more complexity
         const double lowerBound = 0.0;
         const double upperBound = 1.0;
