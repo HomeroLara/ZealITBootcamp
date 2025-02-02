@@ -7,7 +7,7 @@ class Program
 {
     static async Task Main()
     {
-        Run2();
+        Run();
 
         Console.WriteLine("\nLeaving 'Run'...");
 
