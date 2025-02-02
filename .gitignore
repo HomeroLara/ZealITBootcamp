@@ -1,6 +1,11 @@
 JITDemo/obj
 .idea/.idea.ZealITBootcamp
 .idea
+[Bb]in/
+[Oo]bj/
+*.DS_Store
+*/.DS_Store
+*/*/.DS_Store
 GCDemo/obj
 GCDemo/bin/Debug
 Week2/GCDemo/bin
@@ -12,3 +17,4 @@ Week2/WebApplication1/bin
 Week2/WebApplication1/obj
 Week3/MetricsDemo/bin
 Week3/MetricsDemo/obj
+Week3/BenchmarkDemo/BenchmarkDotNet.Artifacts

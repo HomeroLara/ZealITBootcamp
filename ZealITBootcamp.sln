@@ -1,5 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week2", "Week2", "{9BE74432-4CDB-422F-BF1D-7BF1503D3B93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JITDemo", "Week2\JITDemo\JITDemo.csproj", "{CC622C41-EFFE-4111-BE74-5DA7776CE033}"
@@ -12,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week3", "Week3", "{8B4CDEA3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricsDemo", "Week3\MetricsDemo\MetricsDemo.csproj", "{F44CC901-5E4E-4B97-BA10-679352A88CAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkDemo", "Week3\BenchmarkDemo\BenchmarkDemo.csproj", "{A8227369-E19D-4177-8888-F6721E66DCAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +25,7 @@ Global
 		{C4FA9B5E-3175-4D7E-B1D9-702EBEB0D296} = {9BE74432-4CDB-422F-BF1D-7BF1503D3B93}
 		{D499EB96-7636-4679-9E64-4A530E7F68F5} = {9BE74432-4CDB-422F-BF1D-7BF1503D3B93}
 		{F44CC901-5E4E-4B97-BA10-679352A88CAE} = {8B4CDEA3-FA6F-4C4A-9256-3F0119F9BE11}
+		{A8227369-E19D-4177-8888-F6721E66DCAF} = {8B4CDEA3-FA6F-4C4A-9256-3F0119F9BE11}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CC622C41-EFFE-4111-BE74-5DA7776CE033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -40,5 +44,9 @@ Global
 		{F44CC901-5E4E-4B97-BA10-679352A88CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F44CC901-5E4E-4B97-BA10-679352A88CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F44CC901-5E4E-4B97-BA10-679352A88CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8227369-E19D-4177-8888-F6721E66DCAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8227369-E19D-4177-8888-F6721E66DCAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8227369-E19D-4177-8888-F6721E66DCAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8227369-E19D-4177-8888-F6721E66DCAF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
