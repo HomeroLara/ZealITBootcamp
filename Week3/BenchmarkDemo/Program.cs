@@ -17,7 +17,8 @@ class Program
     {
         var summaryConfig = AsciiTableFormatConfig();
         // BenchmarkRunner.Run<SimpleStringConcatenationBenchmarks>(summaryConfig);
-        BenchmarkRunner.Run<LinqVsLoopBenchmarks>(summaryConfig);
+        // BenchmarkRunner.Run<LinqVsLoopBenchmarks>(summaryConfig);
+        BenchmarkRunner.Run<JsonSerializationBenchmarks>(summaryConfig);
     }
 
     /// <summary>

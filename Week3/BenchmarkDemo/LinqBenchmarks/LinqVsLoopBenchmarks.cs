@@ -16,7 +16,6 @@ namespace BenchmarkDemo;
 public class LinqVsLoopBenchmarks
 {
     private List<int> _numbers;
-    private readonly Consumer consumer = new Consumer(); // Required for .Consume()
 
     [GlobalSetup]
     public void Setup()
