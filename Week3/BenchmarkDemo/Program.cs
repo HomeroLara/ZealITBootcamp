@@ -19,7 +19,7 @@ class Program
         // BenchmarkRunner.Run<SimpleStringConcatenationBenchmarks>(summaryConfig);
         // BenchmarkRunner.Run<LinqVsLoopBenchmarks>(summaryConfig);
         // BenchmarkRunner.Run<JsonSerializationBenchmarks>(summaryConfig);
-        BenchmarkRunner.Run<Md5VsSha256>(summaryConfig);
+        BenchmarkRunner.Run<ArrayvsSpanBenchmarks>(summaryConfig);
     }
 
     /// <summary>
@@ -38,25 +38,5 @@ class Program
             .AddExporter(MarkdownExporter.GitHub) // Export as Markdown for GitHub
             .AddExporter(CsvExporter.Default) // Export as CSV
             .AddExporter(JsonExporter.Full); // Export as JSON
-    }
-
-    /// <summary>
-    /// Enable Pretty Console Output (ASCII Table)
-    /// </summary>
-    /// <returns></returns>
-    private static IConfig AsciiTableFormatConfig()
-    {
-        return DefaultConfig.Instance
-            .AddExporter(DefaultExporters.AsciiDoc);
-    }
-
-    /// <summary>
-    /// Enables graphical output, Benchmark.Net can generate R-based plots:
-    /// </summary>
-    /// <returns></returns>
-    private static IConfig GraphFormatConfig()
-    {
-        return DefaultConfig.Instance
-    .AddExporter(RPlotExporter.Default);
     }
 }
