@@ -15,10 +15,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        var summaryConfig = AsciiTableFormatConfig();
+        var summaryConfig = DetailedConfig();
         // BenchmarkRunner.Run<SimpleStringConcatenationBenchmarks>(summaryConfig);
         // BenchmarkRunner.Run<LinqVsLoopBenchmarks>(summaryConfig);
-        BenchmarkRunner.Run<JsonSerializationBenchmarks>(summaryConfig);
+        // BenchmarkRunner.Run<JsonSerializationBenchmarks>(summaryConfig);
+        BenchmarkRunner.Run<Md5VsSha256>(summaryConfig);
     }
 
     /// <summary>
@@ -34,7 +35,7 @@ class Program
     {
         return DefaultConfig.Instance
             .AddLogger(ConsoleLogger.Default)  // Default console logger
-            .AddExporter(MarkdownExporter.GitHub) // Export as Markdown
+            .AddExporter(MarkdownExporter.GitHub) // Export as Markdown for GitHub
             .AddExporter(CsvExporter.Default) // Export as CSV
             .AddExporter(JsonExporter.Full); // Export as JSON
     }

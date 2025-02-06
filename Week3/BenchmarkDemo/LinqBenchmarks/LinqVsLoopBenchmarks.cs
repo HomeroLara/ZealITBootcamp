@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Running;
-using BenchmarkDotNet.Order;
-using System.Runtime.InteropServices;
 using BenchmarkDotNet.Engines;
+using BenchmarkDotNet.Order;
 
 namespace BenchmarkDemo;
 
+[SimpleJob(RunStrategy.ColdStart, launchCount:50)]
 [MemoryDiagnoser] // tracks memory allocations
 [Orderer(SummaryOrderPolicy.FastestToSlowest)] // order the summary of results from fastest to slowest
 [RankColumn] // add a rank column to the summary table

@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Running;
+using BenchmarkDotNet.Engines;
 using BenchmarkDotNet.Order;
-using Newtonsoft.Json;
 
 namespace BenchmarkDemo;
 
+[SimpleJob(RunStrategy.ColdStart, launchCount:50)]
 [MemoryDiagnoser] // Tracks memory allocation
 [Orderer(SummaryOrderPolicy.FastestToSlowest)] // Orders results from fastest to slowest
 [RankColumn] // Adds ranking to results
@@ -48,8 +45,8 @@ public class JsonSerializationBenchmarks
 public class SampleData
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public int Age { get; set; }
-    public string Email { get; set; }
-    public List<string> Interests { get; set; }
+    public string? Email { get; set; }
+    public List<string>? Interests { get; set; }
 }
