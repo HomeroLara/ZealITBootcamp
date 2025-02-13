@@ -6,10 +6,9 @@ using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;using Prometheus;
+using OpenTelemetry.Trace;
 using Serilog;
 using Serilog.Events;
-using HistogramConfiguration = Prometheus.HistogramConfiguration;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,23 +30,15 @@ builder.Logging.AddOpenTelemetry(options =>
     options.AddConsoleExporter(); // Optional, to see logs in console
 });
 
-
-var countweatherforecastRequests = Metrics
-    .CreateCounter("weatherforecast_count", "Counts the number of weatherforecast requests");
-
-var activeRequests = Metrics
-    .CreateGauge("metricsdemo_weather_activerequests", "Number active requests to weather forecast.");
-
-var requestDuration = Metrics
-    .CreateHistogram("weatherforecast_duration", "Histogram Records the duration of weatherforecast requests\"",
-        new HistogramConfiguration
-        {
-            LabelNames = new[] {"status"},
-            Buckets = Histogram.LinearBuckets(start: 0, width: 100, count: 10)
-        });
-
+// Custom metrics for the application
+var  weatherforecastMeter = new Meter("webAppication1.demo", "1.0.0");
+var countweatherforecastRequests = weatherforecastMeter.CreateCounter<int>(
+    "webAppication1.weatherforecast.count", 
+    description: "Counts the number of weatherforecast requests in webAppication1"
+);
 // Custom ActivitySource for the application
-var weatherforecastActivitySource = new ActivitySource("MetricsDemo_Weatherforecast");
+var weatherforecastActivitySource = new ActivitySource("webAppication1.Weatherforecast");
+
 
 
 var tracingOtlpEndpoint = builder.Configuration["OTLP_ENDPOINT_URL"];
@@ -61,7 +52,7 @@ otel.ConfigureResource(resource => resource
 otel.WithMetrics(metrics => metrics
     // Metrics provider from OpenTelemetry
     .AddAspNetCoreInstrumentation()
-    //.AddMeter(weatherforecastMeter.Name)
+    .AddMeter(weatherforecastMeter.Name)
     // Metrics provides by ASP.NET Core in .NET 8
     .AddMeter("Microsoft.AspNetCore.Hosting")
     .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
@@ -75,23 +66,21 @@ otel.WithTracing(tracing =>
 {
     tracing.AddAspNetCoreInstrumentation();
     tracing.AddHttpClientInstrumentation();
-    // tracing.AddSqlClientInstrumentation();
     tracing.AddSource(weatherforecastActivitySource.Name);
     if (tracingOtlpEndpoint != null)
     {
-        // tracing.AddOtlpExporter(otlpOptions =>
-        // {
-        //     otlpOptions.Endpoint = new Uri("http://host.docker.internal:4317");
-        //    // otlpOptions.Protocol = OtlpExportProtocol.HttpProtobuf;
-        //    otlpOptions.ExportProcessorType = ExportProcessorType.Simple;
-        // });
+        tracing.AddOtlpExporter(otlpOptions =>
+        {
+            otlpOptions.Endpoint = new Uri(tracingOtlpEndpoint);
+            otlpOptions.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
+        });
 
         tracing.AddJaegerExporter(options =>
         {
             options.Endpoint = new Uri("http://host.docker.internal:14268");
         });
         
-        //tracing.AddConsoleExporter();
+        tracing.AddConsoleExporter();
     }
     else
     {
@@ -99,13 +88,6 @@ otel.WithTracing(tracing =>
     }
 });
 
-builder.Logging.AddOpenTelemetry(options =>
-{
-    options.IncludeFormattedMessage = true;
-    options.IncludeScopes = true;
-    options.SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault()
-        .AddService(builder.Environment.ApplicationName));
-});
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -122,14 +104,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 // Configure the Prometheus scraping endpoint
 app.MapPrometheusScrapingEndpoint();
-
-// Configure the Prometheus scraping endpoint
-app.UseMetricServer();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
 // Add custom middleware to log request and response payloads
 app.Use(async (context, next) =>
@@ -156,51 +130,30 @@ app.Use(async (context, next) =>
     await responseBody.CopyToAsync(originalBodyStream);
 });
 
-// app.MapGet("/weatherforecast", ([FromServices] ILogger<Program> logger) =>
-//     {
-//         logger.LogInformation("get weather forecast called");
-//         // Create a new Activity scoped to the method
-//         using var activity = weatherforecastActivitySource.StartActivity("WeatherforecastActivity");
-//         var forecast = Enumerable.Range(1, 5).Select(index =>
-//                 new WeatherForecast
-//                 (
-//                     DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-//                     Random.Shared.Next(-20, 55),
-//                     summaries[Random.Shared.Next(summaries.Length)]
-//                 ))
-//             .ToArray();
-//
-//         // Increment the custom counter
-//         countweatherforecastRequests.Add(1);
-//         return forecast;
-//     })
-//     .WithName("GetWeatherForecast");
-app.MapGet("/weatherforecast", async ([FromServices] ILogger<Program> logger) =>
+var summaries = new[]
+{
+    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+};
+
+app.MapGet("/weatherforecast", ([FromServices] ILogger<Program> logger) =>
     {
-        using var activity = weatherforecastActivitySource.StartActivity("MetricsDemo.WeatherforecastActivity");
         logger.LogInformation("get weather forecast called");
+        // Create a new Activity scoped to the method
+        using var activity = weatherforecastActivitySource.StartActivity("WebApplication1.WeatherforecastActivity");
+        var forecast = Enumerable.Range(1, 5).Select(index =>
+                new WeatherForecast
+                (
+                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                    Random.Shared.Next(-20, 55),
+                    summaries[Random.Shared.Next(summaries.Length)]
+                ))
+            .ToArray();
 
         // Increment the custom counter
-        countweatherforecastRequests.Inc();
-
-        activeRequests.Inc();
-
-        // Record the duration of the request using Activity
-        var startTime = activity?.StartTimeUtc ?? DateTime.UtcNow;
-
-        using var client = new HttpClient();
-        var response = await client.GetAsync("http://localhost:5183/weatherforecast");
-        response.EnsureSuccessStatusCode();
-        var forecast = await response.Content.ReadFromJsonAsync<WeatherForecast[]>();
-
-        var endTime = DateTime.UtcNow;
-        var duration = (endTime - startTime).TotalMilliseconds;
-        requestDuration.Observe(duration);
-
-        // Decrement the active request count
-        activeRequests.Dec();
-
-        return forecast ?? Array.Empty<WeatherForecast>();
+        countweatherforecastRequests.Add(1);
+        // Add a tag to the Activity
+        activity?.SetTag("weatherforecast", "Hello World!");
+        return forecast;
     })
     .WithName("GetWeatherForecast");
 
