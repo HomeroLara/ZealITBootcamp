@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:ZealITMobile.ViewModels"
+    x:Class="ZealITMobile.Pages.StringOptimizationPage">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:StringOptimizationViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <VerticalStackLayout 
+            Padding="20" 
+            Spacing="30">
+        
+            <Label Text="String Optimization Performance Tests"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Button Text="Test String Concatenation"
+                    Command="{Binding TestStringConcatenationCommand}" />
+
+            <Button Text="Test StringBuilder"
+                    Command="{Binding TestStringBuilderCommand}" />
+
+            <Label Text="{Binding TestResult}"
+                   FontSize="16"
+                   HorizontalOptions="Center" />
+            
+            <ActivityIndicator
+                Color="Red"
+                IsRunning="{ Binding IsBusy }"
+                IsVisible="{ Binding IsBusy }" />
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

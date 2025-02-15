@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:ZealITMobile.ViewModels"
+    x:Class="ZealITMobile.Pages.IDisposablePage">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:IDisposableViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        
+        <VerticalStackLayout Padding="20" Spacing="15">
+        
+            <Label Text="Large Data Model IDisposable Example"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Button Text="Create Large Data (50MB)"
+                    Command="{ Binding CreateLargeDataModelCommand }" />
+
+            <Button Text="Dispose Large Data"
+                    Command="{ Binding DisposeLargeDataModelCommand }" />
+
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>
