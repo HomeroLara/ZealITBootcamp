@@ -1,0 +1,88 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# ArrayPool< T >
+
+### Key Features
+- Reduces Garbage Collection (GC) Pressure: Instead of constantly allocating and deallocating arrays, ArrayPool<T> reuses existing arrays, reducing memory fragmentation and GC work.
+- Thread-Safe: The pool manages arrays across multiple threads.
+- Two Implementations:
+    - Shared Pool (ArrayPool<T>.Shared): A global pool shared across the application.
+    - Custom Pool (ArrayPool<T>.Create()): Allows for fine-tuned control over size and behavior.
+- Rent and Return Mechanism:
+    - Rent(int minimumLength): Retrieves an array of at least the specified length.
+    - Return(T[] array, bool clearArray = false): Returns an array back to the pool. Optionally, you can clear the contents for security reasons.
+
+#!csharp
+
+using System;
+using System.Buffers;
+using Microsoft.DotNet.Interactive;
+using Microsoft.DotNet.Interactive.CSharp;
+
+// Rent an array of at least 10 elements from the shared pool
+var arrayPoolNumbers = ArrayPool<int>.Shared.Rent(100);
+
+for(int i = 0; i < 100; i++)
+{
+    arrayPoolNumbers[i] = i * 2;
+    Console.WriteLine(arrayPoolNumbers[i]);
+}
+
+// Return the array to the shared pool & clear data
+ArrayPool<int>.Shared.Return(arrayPoolNumbers);
+
+#!csharp
+
+// Rent an array from the shared pool
+var firstArray = ArrayPool<int>.Shared.Rent(5);
+
+// Modify the contents of the array
+for (int i = 0; i < firstArray.Length; i++)
+{
+    firstArray[i] = i + 10;
+}
+
+// Print the modified array values
+Console.WriteLine("First rented array before returning:");
+Console.WriteLine(string.Join(", ", firstArray));
+
+// Return the array to the pool (without clearing)
+ArrayPool<int>.Shared.Return(firstArray, clearArray: false);
+
+// Rent another array of the same size
+int[] secondArray = ArrayPool<int>.Shared.Rent(5);
+
+// Print the values of the second rented array
+Console.WriteLine("Second rented array after returning first:");
+Console.WriteLine(string.Join(", ", secondArray));
+
+// Return the second array to the pool
+ArrayPool<int>.Shared.Return(secondArray, clearArray: true);
+
+#!csharp
+
+#r "nuget: Microsoft.Extensions.ObjectPool"
+
+#!csharp
+
+using Microsoft.Extensions.ObjectPool;
+using System.Text;
+
+// create an object pool of StringBuilder instances
+var pool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
+
+Console.WriteLine("StringBuilder instances from the pool:");
+
+// Rent a StringBuilder instance from the pool
+var sb1 = pool.Get();
+sb1.Append("Hello World!");
+
+// Print the contents of the StringBuilder instance
+Console.WriteLine(sb1.ToString());
+
+// Return the StringBuilder instance to the pool
+pool.Return(sb1);

@@ -1,0 +1,70 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"languageName":"csharp","name":"csharp"}]}}
+
+#!markdown
+
+# WeakReference < T >
+a special type that holds a weak reference to an object, meaning that it allows the garbage collector (GC) to reclaim the object if no strong references exist. This can help prevent memory leaks in long-lived applications, such as your .NET MAUI mobile app.
+
+Why Use WeakReference < T >?
+- Prevents Memory Leaks: Helps avoid keeping objects in memory longer than needed.
+- Avoids Circular References: Useful when objects reference each other in a way that would otherwise prevent garbage collection.
+- Efficient Event Handling: Used in scenarios where event subscriptions should not prevent object collection.
+
+#!markdown
+
+create the object that will be used to demo strong references vs weak references
+
+#!csharp
+
+public class Person {
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public int Age { get; set; }
+    public string Email { get; set; }
+
+    ~Person() {
+        Console.WriteLine("Person object destroyed");
+    }
+}
+
+#!csharp
+
+// create strong reference
+var strongReferencePerson = new Person {
+    FirstName = "Jaun",
+    LastName = "Doe",
+    Age = 36,
+    Email = "j.doe@gmail.com",
+};
+
+// create weak reference
+WeakReference<Person> weakReferencePerson = new WeakReference<Person>(strongReferencePerson);
+
+Console.WriteLine("Strong & weak references exists.");
+
+// release strong reference
+strongReferencePerson = null;
+
+// check if weak reference is alive
+if (weakReferencePerson.TryGetTarget(out Person target)) {
+    Console.WriteLine($"Weak reference is alive. Email = {target.Email}");
+} else {
+    Console.WriteLine("Weak reference is dead");
+}
+
+// force garbage collection
+GC.Collect();
+GC.WaitForPendingFinalizers();
+
+// try again after GC.
+if (weakReferencePerson.TryGetTarget(out target))
+{
+    Console.WriteLine("Object still alive (accessed via WeakReference): " + target.Email); // unlikely
+}
+else
+{
+    Console.WriteLine("Object has been garbage collected."); // likely
+}

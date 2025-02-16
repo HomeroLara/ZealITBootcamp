@@ -17,6 +17,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "Week3\WebApplication1\WebApplication1.csproj", "{3F9D28DF-B787-472B-BB75-3D5D65ED84F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week5", "Week5", "{74193BF6-5229-CF04-E684-3ACD8A549AE2}"
+	ProjectSection(SolutionItems) = preProject
+		Week5\dotNetInteractiveNotebooks\WeakReference.dib = Week5\dotNetInteractiveNotebooks\WeakReference.dib
+		Week5\dotNetInteractiveNotebooks\Pooling.dib = Week5\dotNetInteractiveNotebooks\Pooling.dib
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
