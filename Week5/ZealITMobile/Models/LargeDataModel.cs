@@ -2,39 +2,69 @@ namespace ZealITMobile.Models;
 
 public class LargeDataModel : IDisposable
 {
+    // flag to track whether the object has been disposed.
     private bool _disposed;
+    
+    // the resource we want to dispose
+    // ***NOTE: while a byte[] is technically managed, we treat it
+    // ***      like an unmanaged resource due to its size(potential)
+    // ***      and therefore we want a prompt release as soon as it is not needed
     private byte[] _data;
+    
+    // stores the size of the data.
+    // needed if using ArrayPool.
+    private int _size;
 
     public LargeDataModel(int sizeInMB)
     {
-        _data = new byte[sizeInMB * 1024 * 1024];
+        _size = sizeInMB * 1024 * 1024;
+        _data = new byte[_size];
     }
 
-    ~LargeDataModel()
-    {
-        Dispose(false);
-    }
-
+    /// <summary>
+    /// public dispose method. called explicitly to release resources.
+    /// ***NOTE: in our case, this will be triggered manually or by Page life cycle events
+    /// </summary>
     public void Dispose()
     {
         Dispose(true);
         
-        // prevent the garbage collector from calling the finalizer (~Finalizer)
-        // on an object after it has been manually disposed.
+        // we want to suppress the finalization since we are manually disposing the resources in this object: the GC doesn't need to call the finalizer
+        // we're telling the GC that we've manually cleaned up the resources related to this object
+        // improves performance.
         // prevents double cleanup 
         GC.SuppressFinalize(this);
     }
 
+    
+    /// <summary>
+    /// protected virtual dispose method.  Handles resource cleanup.
+    /// </summary>
+    /// <param name="disposing">True if called from Dispose(), false if from the finalizer.</param>
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposed)
         {
             if (disposing)
             {
-                // Dispose any other managed resources, if needed
+                // Dispose of any *other* managed resources here (if any).
+                // Example:
+                // if (_someOtherDisposableObject != null) {
+                //     _someOtherDisposableObject.Dispose();
+                //     _someOtherDisposableObject = null; // Important: Set to null
+                // }
             }
-            _data = null;
+            _data = null; // release the reference
             _disposed = true;
         }
+    }
+    
+    /// <summary>
+    /// Finalizer. this called by the garbage collector if Dispose() is not manually called.
+    /// IMPORTANT: Only cleans up unmanaged-like resources (in this case, the large byte array).
+    /// </summary>
+    ~LargeDataModel()
+    {
+        Dispose(false);
     }
 }

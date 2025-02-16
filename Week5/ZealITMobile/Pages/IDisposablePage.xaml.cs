@@ -14,13 +14,13 @@ public partial class IDisposablePage : ContentPage
         InitializeComponent();
     }
 
-    protected override void OnDisappearing()
+    protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
-        base.OnDisappearing();
+        base.OnNavigatedFrom(args);
         if (BindingContext is IDisposableViewModel viewModel)
         {
             // dispose of any resources when this view is no longer on top
-            viewModel.DisposeLargeDataModelCommand.Execute(null);   
+            viewModel?.Dispose(); 
         }
     }
 }

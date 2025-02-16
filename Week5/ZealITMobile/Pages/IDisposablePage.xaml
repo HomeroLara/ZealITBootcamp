@@ -22,9 +22,6 @@
             <Button Text="Create Large Data (50MB)"
                     Command="{ Binding CreateLargeDataModelCommand }" />
 
-            <Button Text="Dispose Large Data"
-                    Command="{ Binding DisposeLargeDataModelCommand }" />
-
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>
