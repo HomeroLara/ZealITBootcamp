@@ -17,4 +17,9 @@ public partial class MainPage : ContentPage
     {
         Navigation.PushAsync(new IDisposablePage());
     }
+
+    private void EventMemoryLeakButton_OnClicked(object? sender, EventArgs e)
+    {
+        Navigation.PushAsync(new EventMemoryLeakPage());
+    }
 }

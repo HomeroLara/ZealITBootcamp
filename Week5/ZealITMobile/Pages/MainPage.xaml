@@ -42,6 +42,12 @@
                     Text="IDisposable Example"
                     Clicked="IDisposableButton_OnClicked"
                     HorizontalOptions="Fill"/>
+                
+                <Button
+                    x:Name="EventMemoryLeakButton"
+                    Text="Event Memory Leak Example"
+                    Clicked="EventMemoryLeakButton_OnClicked"
+                    HorizontalOptions="Fill"/>
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage.Content>
