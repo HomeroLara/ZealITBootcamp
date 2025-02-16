@@ -13,7 +13,10 @@ public partial class StringOptimizationViewModel : ObservableObject
     private bool _isBusy;
         
     [ObservableProperty]
-    private string _testResult;
+    private string _testStringConcatenationResult = "String Concatenation Time: 00:00:00";
+    
+    [ObservableProperty]
+    private string _testStringBuilderResult = "StringBuilder Time: 00:00:00";
 
     [RelayCommand]
     public void TestStringConcatenation()
@@ -22,7 +25,7 @@ public partial class StringOptimizationViewModel : ObservableObject
         var stopwatch = Stopwatch.StartNew();
         StringTests.TestStringConcatenation(100000);
         stopwatch.Stop();
-        TestResult = $"String Concatenation Time: {stopwatch.ElapsedMilliseconds} ms";
+        TestStringConcatenationResult = $"String Concatenation Time: {stopwatch.ElapsedMilliseconds} ms";
         IsBusy = false;
     }
 
@@ -33,7 +36,7 @@ public partial class StringOptimizationViewModel : ObservableObject
         var stopwatch = Stopwatch.StartNew();
         StringTests.TestStringBuilder(100000);
         stopwatch.Stop();
-        TestResult = $"StringBuilder Time: {stopwatch.ElapsedMilliseconds} ms";
+        TestStringBuilderResult = $"StringBuilder Time: {stopwatch.ElapsedMilliseconds} ms";
         IsBusy = false;
     }
 }

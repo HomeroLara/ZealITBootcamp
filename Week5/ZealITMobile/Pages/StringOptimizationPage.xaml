@@ -13,27 +13,35 @@
     <ContentPage.Content>
         <VerticalStackLayout 
             Padding="20" 
-            Spacing="30">
+            Spacing="0">
         
-            <Label Text="String Optimization Performance Tests"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center" />
+            <Label 
+                Margin="0,0,0,100"
+                Text="String Optimization Performance Tests"
+                FontSize="20"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
 
-            <Button Text="Test String Concatenation"
-                    Command="{Binding TestStringConcatenationCommand}" />
+            <Label 
+                Margin="0,0,0,10"
+                Text="{ Binding TestStringConcatenationResult }"
+                FontSize="16"
+                HorizontalOptions="Center" />
+            <Button 
+                Margin="0,0,0,100"
+                Text="Test String Concatenation"
+                Command="{ Binding TestStringConcatenationCommand }" />
 
-            <Button Text="Test StringBuilder"
-                    Command="{Binding TestStringBuilderCommand}" />
-
-            <Label Text="{Binding TestResult}"
-                   FontSize="16"
-                   HorizontalOptions="Center" />
             
-            <ActivityIndicator
-                Color="Red"
-                IsRunning="{ Binding IsBusy }"
-                IsVisible="{ Binding IsBusy }" />
+            <Label 
+                Margin="0,0,0,10"
+                Text="{ Binding TestStringBuilderResult }"
+                FontSize="16"
+                HorizontalOptions="Center" />
+            <Button 
+                Text="Test StringBuilder"
+                Command="{ Binding TestStringBuilderCommand }" />
+            
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>
