@@ -12,15 +12,20 @@
     
     <ContentPage.Content>
         
-        <VerticalStackLayout Padding="20" Spacing="15">
+        <VerticalStackLayout 
+            Padding="20" 
+            Spacing="15">
         
             <Label Text="Large Data Model IDisposable Example"
                    FontSize="20"
                    FontAttributes="Bold"
                    HorizontalOptions="Center" />
 
-            <Button Text="Create Large Data (50MB)"
+            <Button Text="Create LargeDataModel"
                     Command="{ Binding CreateLargeDataModelCommand }" />
+            
+            <Button Text="Wrap LargeDataModel in Using Statement"
+                    Command="{ Binding UsingStatementCommand }" />
 
         </VerticalStackLayout>
     </ContentPage.Content>
