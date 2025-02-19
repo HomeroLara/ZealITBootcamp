@@ -4,14 +4,14 @@
 
 #!markdown
 
-# ArrayPool< T >
+# ArrayPool`<T>`
 
 ### Key Features
-- Reduces Garbage Collection (GC) Pressure: Instead of constantly allocating and deallocating arrays, ArrayPool<T> reuses existing arrays, reducing memory fragmentation and GC work.
+- Reduces Garbage Collection (GC) Pressure: Instead of constantly allocating and deallocating arrays, ArrayPool`<T>` reuses existing arrays, reducing memory fragmentation and GC work.
 - Thread-Safe: The pool manages arrays across multiple threads.
 - Two Implementations:
-    - Shared Pool (ArrayPool<T>.Shared): A global pool shared across the application.
-    - Custom Pool (ArrayPool<T>.Create()): Allows for fine-tuned control over size and behavior.
+    - Shared Pool (ArrayPool`<T>`.Shared): A global pool shared across the application.
+    - Custom Pool (ArrayPool`<T>`.Create()): Allows for fine-tuned control over size and behavior.
 - Rent and Return Mechanism:
     - Rent(int minimumLength): Retrieves an array of at least the specified length.
     - Return(T[] array, bool clearArray = false): Returns an array back to the pool. Optionally, you can clear the contents for security reasons.

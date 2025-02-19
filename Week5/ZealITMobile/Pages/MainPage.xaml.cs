@@ -22,4 +22,9 @@ public partial class MainPage : ContentPage
     {
         Navigation.PushAsync(new EventMemoryLeakPage());
     }
+
+    private void WeakReferenceButton_OnClicked(object? sender, EventArgs e)
+    {
+        Navigation.PushAsync(new WeakReferencePage());
+    }
 }

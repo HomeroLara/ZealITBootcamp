@@ -13,12 +13,12 @@ public class LargeDataModel : IDisposable
     
     // stores the size of the data.
     // needed if using ArrayPool.
-    private int _size;
+    public int Size { get; }
 
     public LargeDataModel(int sizeInMB)
     {
-        _size = sizeInMB * 1024 * 1024;
-        _data = new byte[_size];
+        Size = sizeInMB * 1024 * 1024;
+        _data = new byte[Size];
     }
 
     /// <summary>
@@ -60,8 +60,7 @@ public class LargeDataModel : IDisposable
     }
     
     /// <summary>
-    /// Finalizer. this called by the garbage collector if Dispose() is not manually called.
-    /// IMPORTANT: Only cleans up unmanaged-like resources (in this case, the large byte array).
+    /// The garbage collector runs finalizers at an unspecified time.
     /// </summary>
     ~LargeDataModel()
     {

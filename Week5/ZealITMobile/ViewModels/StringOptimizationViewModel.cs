@@ -19,9 +19,11 @@ public partial class StringOptimizationViewModel : ObservableObject
     private string _testStringBuilderResult = "StringBuilder Time: 00:00:00";
 
     [RelayCommand]
-    public void TestStringConcatenation()
+    public async Task TestStringConcatenation()
     {
         IsBusy = true;
+        TestStringConcatenationResult = "Calculating string concatenation...";
+        await Task.Delay(100); // Small delay to allow UI to update
         var stopwatch = Stopwatch.StartNew();
         StringTests.TestStringConcatenation(100000);
         stopwatch.Stop();
@@ -30,9 +32,12 @@ public partial class StringOptimizationViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void TestStringBuilder()
+    public async Task TestStringBuilder()
     {
         IsBusy = true;
+        TestStringBuilderResult = "Calculating string builder...";
+        await Task.Delay(100); // Small delay to allow UI to update
+        
         var stopwatch = Stopwatch.StartNew();
         StringTests.TestStringBuilder(100000);
         stopwatch.Stop();

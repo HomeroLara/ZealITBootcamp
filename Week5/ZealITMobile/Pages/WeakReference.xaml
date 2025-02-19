@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:ZealITMobile.ViewModels"
+    x:Class="ZealITMobile.Pages.WeakReferencePage">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:WeakReferenceViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <VerticalStackLayout 
+            Padding="20" 
+            Spacing="15">
+            <Label Text="WeakReference Demonstration"
+                FontSize="20"
+                FontAttributes="Bold"
+                HorizontalOptions="Center" />
+
+            <Button 
+                Text="GC Collection"
+                Command="{Binding CollectGarbageCommand}" />
+
+            <Button 
+                Text="Get Status"
+                Command="{Binding AccessObjectsCommand}" />
+
+            <Label 
+                Text="{Binding Message}"
+                FontSize="16"/>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>

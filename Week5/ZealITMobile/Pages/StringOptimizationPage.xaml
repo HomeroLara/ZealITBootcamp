@@ -41,7 +41,10 @@
             <Button 
                 Text="Test StringBuilder"
                 Command="{ Binding TestStringBuilderCommand }" />
-            
+
+            <ActivityIndicator
+                IsRunning="{ Binding IsBusy }"
+                IsVisible="{ Binding IsBusy }"/>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

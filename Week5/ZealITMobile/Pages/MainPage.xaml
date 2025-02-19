@@ -48,6 +48,12 @@
                     Text="Event Memory Leak Example"
                     Clicked="EventMemoryLeakButton_OnClicked"
                     HorizontalOptions="Fill"/>
+                
+                <Button
+                    x:Name="WeakReferenceButton"
+                    Text="Weak Reference Example"
+                    Clicked="WeakReferenceButton_OnClicked"
+                    HorizontalOptions="Fill"/>
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage.Content>
