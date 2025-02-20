@@ -57,7 +57,13 @@ public partial class IDisposableViewModel : ObservableObject, IDisposable
             // do some stuff with largeDataModel
             UsingStatementResult = "LargeDataModel used and disposed automatically.";
             // do some more stuff....
-        }
+        } // Dispose called automatically 
+        
+        
+        // using (var stream = new FileStream("data.txt", FileMode.Open))
+        // {
+        //     // Read or write operations
+        // } // Dispose called automatically
         
         // if we didn't use using, we'd have to explicitly call LargeDataModel.Dispose()
         // like so:
