@@ -8,15 +8,20 @@ public partial class EventMemoryLeakViewModel : ObservableObject, IDisposable
 {
     private bool _disposed;
     public event EventHandler SomeEvent;
+    
+    [ObservableProperty]
+    private string _message;
 
     public EventMemoryLeakViewModel()
     {
         SomeEvent += OnSomeEvent;
+        Message = "ViewModel's SomeEvent has been wired up.";
     }
 
     private void OnSomeEvent(object sender, EventArgs e)
     {
-        Debug.WriteLine("ViewModel Event Triggered");
+        Debug.WriteLine("ViewModel SomeEvent Triggered");
+        Message = "ViewModel's SomeEvent Triggered";
     }
 
     [RelayCommand]

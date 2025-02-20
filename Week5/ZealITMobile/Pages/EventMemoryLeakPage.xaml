@@ -21,9 +21,17 @@
                 FontSize="20"
                 FontAttributes="Bold"
                 HorizontalOptions="Center" />
+            
+            <Label 
+                x:Name="MessageLabel"
+                Margin="0,0,0,10"
+                Text="{ Binding Message }"
+                FontSize="16"
+                HorizontalOptions="Center" />
 
             <Button 
                 Text="Trigger Event"
+                Clicked="Button_OnClicked"
                 Command="{Binding TriggerEventCommand}" />
 
         </VerticalStackLayout>

@@ -1,5 +1,12 @@
 namespace ZealITMobile.Models;
 
+/// <summary>
+/// implementing IDisposable ensures proper resource cleanup
+/// by manually releasing resources. this is accomplished in the Dispose().
+/// without IDisposable this object would hang around until a GC cycle runs
+/// and determines there are no strong references. with IDisposable we are forced
+/// to implment the Dispose method which makes it easier for us manually dispose of this object
+/// </summary>
 public class LargeDataModel : IDisposable
 {
     // flag to track whether the object has been disposed.
