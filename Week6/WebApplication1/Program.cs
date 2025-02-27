@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.MapGet("/work", (ExpensiveService service) => Results.Ok(service.DoWork()));
+app.MapGet("/", (ExpensiveService service) => Results.Ok(service.DoWork()));
 //app.MapGet("/work", (Lazy<ExpensiveService> lazyService) =>
 //{
 //    var service = lazyService.Value; //

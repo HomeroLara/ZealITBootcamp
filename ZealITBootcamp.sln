@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week5", "Week5", "{74193BF6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Week6", "Week6", "{268F06F5-265D-45B4-A60D-6F48784BC90B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "Week6\ApplicationstartBenchmarkDemo\ConsoleApp1\ConsoleApp1.csproj", "{D15434CF-EF4C-445B-8071-02FBE10748E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "Week6\ConsoleApp1\ConsoleApp1.csproj", "{D15434CF-EF4C-445B-8071-02FBE10748E4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "Week6\WebApplication1\WebApplication1.csproj", "{02057A7D-D5C6-427E-AEEA-9A2B0F5491F8}"
 EndProject

@@ -6,6 +6,7 @@ using BenchmarkDotNet.Running;
 public class ConsoleStartupBenchmark
 {
     [Benchmark]
+    [IterationCount(100)]  // Limits the number of runs
     public void ColdStart()
     {
         var stopwatch = Stopwatch.StartNew();
@@ -18,6 +19,7 @@ public class ConsoleStartupBenchmark
     }
 
     [Benchmark]
+    [IterationCount(100)]  // Limits the number of runs
     public void WarmStart()
     {
         var stopwatch = Stopwatch.StartNew();

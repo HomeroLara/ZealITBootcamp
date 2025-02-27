@@ -1,9 +1,12 @@
+namespace WebApplication1;
+
 public class ExpensiveService
 {
     private readonly ILogger<ExpensiveService> _logger;
 
     public ExpensiveService(ILogger<ExpensiveService> logger)
     {
+        Task.Delay(10000);
         _logger = logger;
     }
 
