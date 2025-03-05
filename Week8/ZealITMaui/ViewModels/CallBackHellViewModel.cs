@@ -28,24 +28,29 @@ public partial class CallBackHellViewModel: ObservableObject
             CookingSteps.Add("Starting breakfast...");
 
             var eggs = new Egg();
+            
+            CookingSteps.Add("🍳 Making Eggs ...");
             eggs.Cook().ContinueWith(_ =>
             {
-                CookingSteps.Add("🍳 Eggs are ready!");
+                CookingSteps.Add("✅ Eggs are ready!");
 
                 var bacon = new Bacon();
+                CookingSteps.Add("🥓 Making-Bacon-Pancakes ...");
                 bacon.Cook().ContinueWith(__ =>
                 {
-                    CookingSteps.Add("🥓 Bacon is ready!");
+                    CookingSteps.Add("✅ Making-Bacon-Pancakes is ready!");
 
                     var toast = new Toast();
+                    CookingSteps.Add("🍞 Making Toast ...");
                     toast.Cook().ContinueWith(___ =>
                     {
-                        CookingSteps.Add("🍞 Toast is ready!");
+                        CookingSteps.Add("✅ Toast is ready!");
 
                         var coffee = new Coffee();
+                        CookingSteps.Add("☕  Making Coffee ...");
                         coffee.Cook().ContinueWith(____ =>
                         {
-                            CookingSteps.Add("☕ Coffee is ready!");
+                            CookingSteps.Add("✅ Coffee is ready!");
                             CookingSteps.Add("Breakfast is ready! 🍽️");
                             _isCooking = false;
                         }, TaskScheduler.FromCurrentSynchronizationContext()); // UI update
