@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:ZealITMaui.ViewModels"
+    x:Class="ZealITMaui.MainPage">
+    <ContentPage.BindingContext>
+        <viewmodels:MainViewModel/>
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            <Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a hovercraft number nine" />
+            
+            <Button
+                x:Name="BreakfastButton"
+                Text="Breakfast" 
+                Clicked="BreakfastButton_OnClicked"
+                HorizontalOptions="Fill" />
+            
+            <Button
+                x:Name="CallBackHellButton"
+                Text="Call Back Hell"
+                Clicked="CallBackHellButton_OnClicked"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
