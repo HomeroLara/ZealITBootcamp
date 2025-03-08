@@ -51,6 +51,44 @@ public partial class CallBackHellViewModel: ObservableObject
     }
 
     [RelayCommand]
+    public void StartCookingAndFreezeUI()
+    {
+
+        if (!IsCooking)
+        {
+            IsCooking = true;
+            CookingSteps.Clear();
+            CookingSteps.Add("Starting breakfast...");
+
+            CookingSteps.Add("🍳 Making Eggs ...");
+            var eggs = new Egg(TimeSpan.FromSeconds(50));
+            eggs.Cook();
+            CookingSteps.Add("🍳 Making are ready ...");
+            
+            CookingSteps.Add("🥓 Making-Bacon-Pancakes ...");
+            var bacons = new Bacon(TimeSpan.FromSeconds(5));
+            bacons.Cook();
+            CookingSteps.Add("🥓 Making-Bacon-Pancakes is ready... ...");
+            
+            CookingSteps.Add("🍞 Making Toast ...");
+            var toast = new Bacon(TimeSpan.FromSeconds(5));
+            toast.Cook();
+            CookingSteps.Add("🍞 Toast is ready ...");
+            
+            CookingSteps.Add("☕  Making Coffee ...");
+            var coffees = new Coffee(TimeSpan.FromSeconds(5));
+            coffees.Cook();
+            CookingSteps.Add("☕  Coffee is ready ...");
+            
+            CookingSteps.Add("Download Image ...");
+            GetImage();
+            CookingSteps.Add(" Image is downloaded ...");
+
+            IsCooking = false;
+        }
+    }
+
+    [RelayCommand]
     public void StartCooking()
     {
         // prior to C# 5.0 the Task Parallel Library (TPL)'s ContinueWith()
@@ -68,7 +106,7 @@ public partial class CallBackHellViewModel: ObservableObject
             CookingSteps.Clear();
             CookingSteps.Add("Starting breakfast...");
 
-            var eggs = new Egg(TimeSpan.FromSeconds(7));
+            var eggs = new Egg(TimeSpan.FromSeconds(20));
             
             CookingSteps.Add("🍳 Making Eggs ...");
             eggs.Cook().ContinueWith(_ =>

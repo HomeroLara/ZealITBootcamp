@@ -26,10 +26,30 @@
                     Source="{ Binding DownloadImage}"/>
 
                 <Button 
+                    Text="Start Cooking Freeze UI" 
+                    Command="{Binding StartCookingAndFreezeUICommand}"
+                    IsEnabled="{Binding IsCooking, Converter={StaticResource InverseBoolConverter}}"
+                    BackgroundColor="Green" 
+                    TextColor="White"
+                    Padding="10"
+                    FontSize="18" />
+                
+                
+                <Button 
                     Text="Start Cooking" 
                     Command="{Binding StartCookingCommand}"
                     IsEnabled="{Binding IsCooking, Converter={StaticResource InverseBoolConverter}}"
                     BackgroundColor="Green" 
+                    TextColor="White"
+                    Padding="10"
+                    FontSize="18" />
+                
+                
+                <Button 
+                    Text="Button Test UI" 
+                    x:Name="ButtonTestUI"
+                    BackgroundColor="Orange"
+                    Clicked="ButtonTestUI_OnClicked"
                     TextColor="White"
                     Padding="10"
                     FontSize="18" />
