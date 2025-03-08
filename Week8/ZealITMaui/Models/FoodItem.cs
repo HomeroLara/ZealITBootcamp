@@ -19,7 +19,7 @@ public class FoodItem
     }
 }
 
-public class Egg() : FoodItem(TimeSpan.FromSeconds(3));
-public class Toast() : FoodItem(TimeSpan.FromSeconds(3));
-public class Bacon() : FoodItem(TimeSpan.FromSeconds(3));
-public class Coffee() : FoodItem(TimeSpan.FromSeconds(3));
+public class Egg(TimeSpan timeSpan) : FoodItem(timeSpan);
+public class Toast(TimeSpan timeSpan) : FoodItem(timeSpan);
+public class Bacon(TimeSpan timeSpan) : FoodItem(timeSpan);
+public class Coffee(TimeSpan timeSpan) : FoodItem(timeSpan);

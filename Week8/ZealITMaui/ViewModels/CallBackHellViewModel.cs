@@ -68,26 +68,26 @@ public partial class CallBackHellViewModel: ObservableObject
             CookingSteps.Clear();
             CookingSteps.Add("Starting breakfast...");
 
-            var eggs = new Egg();
+            var eggs = new Egg(TimeSpan.FromSeconds(7));
             
             CookingSteps.Add("🍳 Making Eggs ...");
             eggs.Cook().ContinueWith(_ =>
             {
                 CookingSteps.Add("✅ Eggs are ready!");
 
-                var bacon = new Bacon();
+                var bacon = new Bacon(TimeSpan.FromSeconds(4));
                 CookingSteps.Add("🥓 Making-Bacon-Pancakes ...");
                 bacon.Cook().ContinueWith(__ =>
                 {
                     CookingSteps.Add("✅ Making-Bacon-Pancakes is ready!");
 
-                    var toast = new Toast();
+                    var toast = new Toast(TimeSpan.FromSeconds(1));
                     CookingSteps.Add("🍞 Making Toast ...");
                     toast.Cook().ContinueWith(___ =>
                     {
                         CookingSteps.Add("✅ Toast is ready!");
 
-                        var coffee = new Coffee();
+                        var coffee = new Coffee(TimeSpan.FromSeconds(4));
                         CookingSteps.Add("☕  Making Coffee ...");
                         coffee.Cook().ContinueWith(____ =>
                         {

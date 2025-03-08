@@ -15,8 +15,7 @@ public partial class BackgroundWorkerViewModel: ObservableObject
     private bool _isRunning;
     
     private BackgroundWorker _backgroundWorker;
-
-
+    
     public BackgroundWorkerViewModel()
     {
         _backgroundWorker = new BackgroundWorker

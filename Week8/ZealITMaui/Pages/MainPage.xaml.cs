@@ -22,5 +22,10 @@ public partial class MainPage : ContentPage
 	{
 		await Navigation.PushAsync(new BackgroundWorkerPage());
 	}
+
+	private async void AsyncAwaitButton_OnClicked(object? sender, EventArgs e)
+	{
+		await Navigation.PushAsync(new AsyncAwaitPage());
+	}
 }
 
