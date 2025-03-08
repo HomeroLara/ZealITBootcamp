@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZealITMaui.Pages;
 
-public partial class BreakfastPage : ContentPage
+public partial class TaskWhenAllPage : ContentPage
 {
-    public BreakfastPage()
+    public TaskWhenAllPage()
     {
         InitializeComponent();
     }

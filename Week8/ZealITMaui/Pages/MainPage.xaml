@@ -19,15 +19,20 @@
                 SemanticProperties.Description="dot net bot in a hovercraft number nine" />
             
             <Button
-                x:Name="BreakfastButton"
-                Text="Breakfast" 
-                Clicked="BreakfastButton_OnClicked"
+                x:Name="TaskWhenAllButton"
+                Text="Task.WhenAll" 
+                Clicked="TaskWhenAllButton_OnClicked"
                 HorizontalOptions="Fill" />
             
             <Button
                 x:Name="CallBackHellButton"
                 Text="Call Back Hell"
                 Clicked="CallBackHellButton_OnClicked"/>
+            
+            <Button
+                x:Name="BackgroundWorkerButton"
+                Text="Background Workder"
+                Clicked="BackgroundWorkerButton_OnClicked"/>
         </VerticalStackLayout>
     </ScrollView>
 

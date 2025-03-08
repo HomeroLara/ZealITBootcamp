@@ -8,14 +8,19 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 	}
-	private async void BreakfastButton_OnClicked(object? sender, EventArgs e)
+	private async void TaskWhenAllButton_OnClicked(object? sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new BreakfastPage());
+		await Navigation.PushAsync(new TaskWhenAllPage());
 	}
 
 	private async void CallBackHellButton_OnClicked(object? sender, EventArgs e)
 	{
 		await Navigation.PushAsync(new CallBackHellPage());
+	}
+
+	private async void BackgroundWorkerButton_OnClicked(object? sender, EventArgs e)
+	{
+		await Navigation.PushAsync(new BackgroundWorkerPage());
 	}
 }
 

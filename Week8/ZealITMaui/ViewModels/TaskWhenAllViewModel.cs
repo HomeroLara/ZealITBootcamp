@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ZealITMaui.ViewModels;
 
-public partial class BreakfastViewModel: ObservableObject
+public partial class TaskWhenAllViewModel: ObservableObject
 {
     [ObservableProperty] 
     private ObservableCollection<string> _cookingSteps;
@@ -12,7 +12,7 @@ public partial class BreakfastViewModel: ObservableObject
     [ObservableProperty]
     private bool _isCooking;
 
-    public BreakfastViewModel()
+    public TaskWhenAllViewModel()
     {
         CookingSteps = new ObservableCollection<string>();
     }
@@ -20,9 +20,9 @@ public partial class BreakfastViewModel: ObservableObject
     [RelayCommand]
     public async Task StartCooking()
     {
-        if (!_isCooking)
+        if (!IsCooking)
         {
-            _isCooking = true;
+            IsCooking = true;
             CookingSteps.Clear();
                     
             CookingSteps.Add("Starting breakfast...");
@@ -32,7 +32,10 @@ public partial class BreakfastViewModel: ObservableObject
             var toastTask = ToastBread();
             var coffeeTask = BrewCoffee();
 
-            await Task.WhenAll(eggsTask, toastTask, coffeeTask);
+            // Task.WhenAll() is a concurrency utility in C# that waits for multiple tasks to complete asynchronously.
+            // Unlike await on a single task, Task.WhenAll() does not wait sequentially; instead, it allows multiple
+            // tasks to run concurrently and completes when all of them are done.
+            await Task.WhenAll(eggsTask, makeBacon, toastTask, coffeeTask);
 
             CookingSteps.Add("Breakfast is ready! 🍽️");
             IsCooking = false;
