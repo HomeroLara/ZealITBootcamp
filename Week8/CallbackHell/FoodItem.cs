@@ -9,7 +9,7 @@ public class FoodItem
     public FoodItem(TimeSpan cookTime)
     {
         _cookTime = cookTime;
-        Name = GetType().Name;;
+        Name = GetType().Name;
     }
 
     public async Task CookAsync()
@@ -21,15 +21,6 @@ public class FoodItem
         // entry point/Main() while this food item is being made in a 
         // background task.
         await Task.Delay(_cookTime);
-        Console.WriteLine($"{Name}(s) cooked ...");
-    }
-    
-    public void Cook()  
-    {
-        Console.WriteLine($"Cooking {Name}(s) ...");
-        
-        // UI blocking operation
-        Task.Delay(_cookTime);
         Console.WriteLine($"{Name}(s) cooked ...");
     }
 }

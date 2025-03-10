@@ -11,11 +11,18 @@ public class FoodItem
         Name = GetType().Name;;
     }
 
-    public virtual async Task Cook()
+    public virtual async Task CookAsync()
     {
         Console.WriteLine($"Making {Name} ...");
         await Task.Delay(_cookTime);
         Console.WriteLine($"Made {Name} ...");
+    }
+    
+    public virtual void Cook()
+    {
+        Console.WriteLine($"Making {Name} ...");
+        Task.Delay(_cookTime).Wait(); // simulate blocking
+        Console.WriteLine($"✅ Made {Name} ...");
     }
 }
 

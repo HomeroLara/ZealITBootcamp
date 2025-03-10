@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace ZealITMaui.Pages;
 
-public partial class AsyncAwaitPage : ContentPage
+public partial class SynchronousPage : ContentPage
 {
     private Random _random = new Random();
-    public AsyncAwaitPage()
+    public SynchronousPage()
     {
         InitializeComponent();
     }
-    
+
     private void ButtonTestUI_OnClicked(object? sender, EventArgs e)
     {
         // Generate a random color
@@ -22,6 +22,7 @@ public partial class AsyncAwaitPage : ContentPage
         // Set the button's background color
         ButtonTestUI.BackgroundColor = randomColor;
     }
+    
     
     private Color GetRandomColor()
     {

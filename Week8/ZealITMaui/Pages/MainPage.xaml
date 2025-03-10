@@ -19,10 +19,9 @@
                 SemanticProperties.Description="dot net bot in a hovercraft number nine" />
             
             <Button
-                x:Name="TaskWhenAllButton"
-                Text="Task.WhenAll" 
-                Clicked="TaskWhenAllButton_OnClicked"
-                HorizontalOptions="Fill" />
+                x:Name="SynchronousButton"
+                Clicked="SynchronousButton_OnClicked"
+                Text="Synchronous" />
             
             <Button
                 x:Name="CallBackHellButton"
@@ -30,15 +29,15 @@
                 Clicked="CallBackHellButton_OnClicked"/>
             
             <Button
-                x:Name="BackgroundWorkerButton"
-                Text="Background Workder"
-                Clicked="BackgroundWorkerButton_OnClicked"/>
-            
-            
-            <Button
                 x:Name="AsyncAwaitButton"
                 Text="Async Await"
                 Clicked="AsyncAwaitButton_OnClicked"/>
+            
+            <Button
+                x:Name="TaskWhenAllButton"
+                Text="Parallel Execution" 
+                Clicked="TaskWhenAllButton_OnClicked"
+                HorizontalOptions="Fill" />
             
         </VerticalStackLayout>
     </ScrollView>

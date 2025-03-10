@@ -5,10 +5,24 @@ using ZealITMaui.Models;
 
 namespace ZealITMaui.ViewModels;
 
+/*
+    Task Continuation using .ContinueWith() (Pre-Async/Await)
+    Explanation:
+    Before async/await, we used Task Continuations (ContinueWith()) to run operations asynchronously. 
+    Each task triggers the next after it finishes.
+   
+    Pros ✅
+    ✔ Asynchronous no UI blocking
+    ✔ No thread freezing
+
+    Cons ❌
+    ❌ Callback Hell—deeply nested code is hard to read
+    ❌ No built-in exception propagation
+ */
 public partial class CallBackHellViewModel: ObservableObject
 {
     [ObservableProperty] 
-    private ObservableCollection<string> _cookingSteps;
+    private ObservableCollection<string> _cookingSteps = new ObservableCollection<string>();
     
     [ObservableProperty]
     private bool _isCooking;
@@ -21,11 +35,6 @@ public partial class CallBackHellViewModel: ObservableObject
     
     [ObservableProperty]
     private bool _isDownloading;
-
-    public CallBackHellViewModel()
-    {
-        CookingSteps = new ObservableCollection<string>();
-    }
 
     [RelayCommand]
     private async Task GetImage()
@@ -51,44 +60,6 @@ public partial class CallBackHellViewModel: ObservableObject
     }
 
     [RelayCommand]
-    public void StartCookingAndFreezeUI()
-    {
-
-        if (!IsCooking)
-        {
-            IsCooking = true;
-            CookingSteps.Clear();
-            CookingSteps.Add("Starting breakfast...");
-
-            CookingSteps.Add("🍳 Making Eggs ...");
-            var eggs = new Egg(TimeSpan.FromSeconds(50));
-            eggs.Cook();
-            CookingSteps.Add("🍳 Making are ready ...");
-            
-            CookingSteps.Add("🥓 Making-Bacon-Pancakes ...");
-            var bacons = new Bacon(TimeSpan.FromSeconds(5));
-            bacons.Cook();
-            CookingSteps.Add("🥓 Making-Bacon-Pancakes is ready... ...");
-            
-            CookingSteps.Add("🍞 Making Toast ...");
-            var toast = new Bacon(TimeSpan.FromSeconds(5));
-            toast.Cook();
-            CookingSteps.Add("🍞 Toast is ready ...");
-            
-            CookingSteps.Add("☕  Making Coffee ...");
-            var coffees = new Coffee(TimeSpan.FromSeconds(5));
-            coffees.Cook();
-            CookingSteps.Add("☕  Coffee is ready ...");
-            
-            CookingSteps.Add("Download Image ...");
-            GetImage();
-            CookingSteps.Add(" Image is downloaded ...");
-
-            IsCooking = false;
-        }
-    }
-
-    [RelayCommand]
     public void StartCooking()
     {
         // prior to C# 5.0 the Task Parallel Library (TPL)'s ContinueWith()
@@ -109,25 +80,25 @@ public partial class CallBackHellViewModel: ObservableObject
             var eggs = new Egg(TimeSpan.FromSeconds(20));
             
             CookingSteps.Add("🍳 Making Eggs ...");
-            eggs.Cook().ContinueWith(_ =>
+            eggs.CookAsync().ContinueWith(_ =>
             {
                 CookingSteps.Add("✅ Eggs are ready!");
 
                 var bacon = new Bacon(TimeSpan.FromSeconds(4));
                 CookingSteps.Add("🥓 Making-Bacon-Pancakes ...");
-                bacon.Cook().ContinueWith(__ =>
+                bacon.CookAsync().ContinueWith(__ =>
                 {
                     CookingSteps.Add("✅ Making-Bacon-Pancakes is ready!");
 
                     var toast = new Toast(TimeSpan.FromSeconds(1));
                     CookingSteps.Add("🍞 Making Toast ...");
-                    toast.Cook().ContinueWith(___ =>
+                    toast.CookAsync().ContinueWith(___ =>
                     {
                         CookingSteps.Add("✅ Toast is ready!");
 
                         var coffee = new Coffee(TimeSpan.FromSeconds(4));
                         CookingSteps.Add("☕  Making Coffee ...");
-                        coffee.Cook().ContinueWith(____ =>
+                        coffee.CookAsync().ContinueWith(____ =>
                         {
                             CookingSteps.Add("✅ Coffee is ready!");
                             CookingSteps.Add("Breakfast is ready! 🍽️");

@@ -8,24 +8,24 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 	}
-	private async void TaskWhenAllButton_OnClicked(object? sender, EventArgs e)
+	private void TaskWhenAllButton_OnClicked(object? sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new TaskWhenAllPage());
+		Navigation.PushAsync(new TaskWhenAllPage());
 	}
 
-	private async void CallBackHellButton_OnClicked(object? sender, EventArgs e)
+	private void CallBackHellButton_OnClicked(object? sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new CallBackHellPage());
+		Navigation.PushAsync(new CallBackHellPage());
 	}
 
-	private async void BackgroundWorkerButton_OnClicked(object? sender, EventArgs e)
+	private void AsyncAwaitButton_OnClicked(object? sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new BackgroundWorkerPage());
+		Navigation.PushAsync(new AsyncAwaitPage());
 	}
 
-	private async void AsyncAwaitButton_OnClicked(object? sender, EventArgs e)
+	private void SynchronousButton_OnClicked(object? sender, EventArgs e)
 	{
-		await Navigation.PushAsync(new AsyncAwaitPage());
+		Navigation.PushAsync(new SynchronousPage());
 	}
 }
 

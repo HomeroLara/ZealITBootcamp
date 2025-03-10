@@ -1,4 +1,3 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -7,21 +6,21 @@ using ZealITMaui.Models;
 namespace ZealITMaui.ViewModels;
 
 /*
-    The async/await pattern simplifies asynchronous programming, making it more readable and maintainable.
-
-    Pros ✅
-    ✔ No blocking—operations run asynchronously
-    ✔ Readable and maintainable (no deep nesting)
-    ✔ Exception handling is easier (try/catch)
-
-    Cons ❌
-    ❌ Requires understanding of Task and await
-    ❌ Some overhead for async state machines
+ This approach runs everything sequentially in a blocking manner. 
+ Each task must complete before the next one starts.
+   
+   Pros ✅
+   ✔ Simple and easy to understand
+   ✔ Predictable execution order
+   
+   Cons ❌
+   ❌ Blocks the main thread, making it unresponsive
+   ❌ Inefficient—long operations (e.g., I/O, API calls) freeze the application
  */
-public partial class AsyncAwaitViewModel: ObservableObject
+public partial class SynchronousViewModel: ObservableObject
 {
     [ObservableProperty] 
-    private ObservableCollection<string> _cookingSteps;
+    private ObservableCollection<string> _cookingSteps = new ObservableCollection<string>();
     
     [ObservableProperty]
     private bool _isCooking;
@@ -34,14 +33,9 @@ public partial class AsyncAwaitViewModel: ObservableObject
     
     [ObservableProperty]
     private bool _isDownloading;
-
-    public AsyncAwaitViewModel()
-    {
-        CookingSteps = new ObservableCollection<string>();
-    }
-
+    
     [RelayCommand]
-    public async Task StartCookingAsync()
+    public void StartCooking()
     {
         if (!IsCooking)
         {
@@ -50,27 +44,27 @@ public partial class AsyncAwaitViewModel: ObservableObject
             CookingSteps.Add("Starting breakfast...");
 
             CookingSteps.Add("🍳 Making Eggs ...");
-            var eggs = new Egg(TimeSpan.FromSeconds(7));
-            await eggs.CookAsync();
+            var eggs = new Egg(TimeSpan.FromSeconds(5));
+            eggs.Cook();
             CookingSteps.Add("✅ Eggs are ready!");
             
             CookingSteps.Add("🥓 Making-Bacon-Pancakes ...");
             var bacon = new Bacon(TimeSpan.FromSeconds(4));
-            await bacon.CookAsync();
+            bacon.Cook();
             CookingSteps.Add("✅ Making-Bacon-Pancakes is ready!");
             
             CookingSteps.Add("🍞 Making Toast ...");
             var toast = new Toast(TimeSpan.FromSeconds(1));
-            await toast.CookAsync();
+            toast.Cook();
             CookingSteps.Add("✅ Toast is ready!");
             
             CookingSteps.Add("☕  Making Coffee ...");
             var coffee = new Coffee(TimeSpan.FromSeconds(3));
-            await coffee.CookAsync();
+            coffee.Cook();
             CookingSteps.Add("✅ Coffee is ready!");
             
             CookingSteps.Add("Download Image ...");
-            await GetImage();
+            GetImage();
             CookingSteps.Add("✅ Image is downloaded!");
             CookingSteps.Add("Breakfast is ready! 🍽️");
         }

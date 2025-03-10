@@ -4,6 +4,17 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ZealITMaui.ViewModels;
 
+/*
+    Instead of running tasks sequentially, we run them concurrently to reduce execution time.
+
+    Pros ✅
+    ✔ Faster execution (tasks run in parallel)
+    ✔ Readable & efficient
+
+    Cons ❌
+    ❌ Tasks should be independent (i.e., no dependencies)
+    ❌ Harder to debug when multiple async tasks run simultaneously
+ */
 public partial class TaskWhenAllViewModel: ObservableObject
 {
     [ObservableProperty] 
