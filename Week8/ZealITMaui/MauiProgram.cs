@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using ZealITMaui.Contracts;
+using ZealITMaui.Services;
 
 namespace ZealITMaui;
 
@@ -19,6 +21,7 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
+		builder.Services.AddSingleton<IFoodService, FoodServices>();
 		return builder.Build();
 	}
 }
