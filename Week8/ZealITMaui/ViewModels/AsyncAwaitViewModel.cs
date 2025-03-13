@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ZealITMaui.Contracts;
 using ZealITMaui.Models;
+using ZealITMaui.Services;
 
 namespace ZealITMaui.ViewModels;
 
@@ -38,10 +39,10 @@ public partial class AsyncAwaitViewModel: ObservableObject
     
     private readonly IFoodService _foodService;
 
-    public AsyncAwaitViewModel(IFoodService foodService)
+    public AsyncAwaitViewModel()
     {
         CookingSteps = new ObservableCollection<string>();
-        _foodService = foodService;
+        _foodService = new FoodServices();
     }
 
     [RelayCommand]

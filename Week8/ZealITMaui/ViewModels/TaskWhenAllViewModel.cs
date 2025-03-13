@@ -10,6 +10,7 @@ namespace ZealITMaui.ViewModels;
     Pros ✅
     ✔ Faster execution (tasks run in parallel)
     ✔ Readable & efficient
+    ✔ avoid chaining awaits
 
     Cons ❌
     ❌ Tasks should be independent (i.e., no dependencies)
@@ -42,6 +43,13 @@ public partial class TaskWhenAllViewModel: ObservableObject
             var makeBacon = MakeBacon();
             var toastTask = ToastBread();
             var coffeeTask = BrewCoffee();
+            
+            // ❌ bad practice
+            // waiting for one to finish before starting another is inefficient.
+            // await FryEggs();  // Waits for Task1 to finish first...
+            // await MakeBacon();  // Then starts Task2 (wasting time)
+            // await ToastBread();  // Then starts Task3 (more wasted time)
+            // await BrewCoffee();  // Then starts Task3 (more wasted time)
 
             // Task.WhenAll() is a concurrency utility in C# that waits for multiple tasks to complete asynchronously.
             // Unlike await on a single task, Task.WhenAll() does not wait sequentially; instead, it allows multiple
