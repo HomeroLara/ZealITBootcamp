@@ -34,6 +34,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqDemo", "Week2\LinqDemo\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChannelDemo", "Week2\ChannelDemo\ChannelDemo.csproj", "{0BFD2CCA-036B-4B89-BDE1-B44597E4BABE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SimpleTaxReceiptGenerator", "SimpleTaxReceiptGenerator", "{DA93FC43-BE43-468B-A560-F8AD3D04F70E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTaxReceiptGenerator.Client", "Week3\SimpleTaxReceiptGenerator\SimpleTaxReceiptGenerator.Client\SimpleTaxReceiptGenerator.Client.csproj", "{FAD6B6BC-B099-45D0-B5AD-6ABC0A575390}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTaxReceiptGenerator.Benchmarks", "Week3\SimpleTaxReceiptGenerator\SimpleTaxReceiptGenerator.Benchmarks\SimpleTaxReceiptGenerator.Benchmarks.csproj", "{DA66BD80-65DD-442C-B680-5085D0BA86C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTaxReceiptGenerator.Services", "Week3\SimpleTaxReceiptGenerator\SimpleTaxReceiptGenerator.Services\SimpleTaxReceiptGenerator.Services.csproj", "{164D61DF-E909-4C6E-800B-58289AE095AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +92,18 @@ Global
 		{0BFD2CCA-036B-4B89-BDE1-B44597E4BABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BFD2CCA-036B-4B89-BDE1-B44597E4BABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BFD2CCA-036B-4B89-BDE1-B44597E4BABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAD6B6BC-B099-45D0-B5AD-6ABC0A575390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAD6B6BC-B099-45D0-B5AD-6ABC0A575390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAD6B6BC-B099-45D0-B5AD-6ABC0A575390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAD6B6BC-B099-45D0-B5AD-6ABC0A575390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA66BD80-65DD-442C-B680-5085D0BA86C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA66BD80-65DD-442C-B680-5085D0BA86C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA66BD80-65DD-442C-B680-5085D0BA86C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA66BD80-65DD-442C-B680-5085D0BA86C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{164D61DF-E909-4C6E-800B-58289AE095AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{164D61DF-E909-4C6E-800B-58289AE095AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{164D61DF-E909-4C6E-800B-58289AE095AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{164D61DF-E909-4C6E-800B-58289AE095AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,5 +120,9 @@ Global
 		{D35B0B10-CB08-4B2B-AEA9-59BED6851DD3} = {268F06F5-265D-45B4-A60D-6F48784BC90B}
 		{DD1F90FE-E0FA-4721-8DDC-17A6DE52ADCF} = {9BE74432-4CDB-422F-BF1D-7BF1503D3B93}
 		{0BFD2CCA-036B-4B89-BDE1-B44597E4BABE} = {9BE74432-4CDB-422F-BF1D-7BF1503D3B93}
+		{DA93FC43-BE43-468B-A560-F8AD3D04F70E} = {8B4CDEA3-FA6F-4C4A-9256-3F0119F9BE11}
+		{FAD6B6BC-B099-45D0-B5AD-6ABC0A575390} = {DA93FC43-BE43-468B-A560-F8AD3D04F70E}
+		{DA66BD80-65DD-442C-B680-5085D0BA86C4} = {DA93FC43-BE43-468B-A560-F8AD3D04F70E}
+		{164D61DF-E909-4C6E-800B-58289AE095AD} = {DA93FC43-BE43-468B-A560-F8AD3D04F70E}
 	EndGlobalSection
 EndGlobal
