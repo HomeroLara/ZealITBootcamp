@@ -12,9 +12,9 @@ public class ReceiptService
 
         foreach (var item in receipt.Items)
         {
-            decimal lineTotal = item.Price * item.Quantity;
-            decimal taxTotal = item.SalesTax * item.Quantity;
-            text += $"{item.Quantity}x {item.Name} @ {item.Price:C} = {lineTotal:C} (Tax: {taxTotal:C})\n";
+            var lineTotal = item.Price * item.Quantity; //decimal 
+            var taxTotal = item.SalesTax * item.Quantity; //decimal 
+            text += $"{item.Quantity} x {item.Name} @ {item.Price:C} = {lineTotal:C} (Tax: {taxTotal:C})\n";
         }
 
         text += "\n";
@@ -34,7 +34,7 @@ public class ReceiptService
         {
             decimal lineTotal = item.Price * item.Quantity;
             decimal taxTotal = item.SalesTax * item.Quantity;
-            builder.AppendLine($"{item.Quantity}x {item.Name} @ {item.Price:C} = {lineTotal:C} (Tax: {taxTotal:C})");
+            builder.AppendLine($"{item.Quantity} x {item.Name} @ {item.Price:C} = {lineTotal:C} (Tax: {taxTotal:C})");
         }
 
         builder.AppendLine();

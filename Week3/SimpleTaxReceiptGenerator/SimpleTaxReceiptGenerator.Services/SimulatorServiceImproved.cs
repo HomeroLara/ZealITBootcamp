@@ -30,9 +30,9 @@ public static class SimulatorServiceImproved
             for (int j = 0; j < itemsPerReceipt; j++)
             {
                 // Create Name inline without _random.Next() twice
-                string name = SampleItemNames[_random.Next(SampleItemNames.Length)];
-                decimal price = Math.Round((decimal)(_random.NextDouble() * 50 + 5), 2); // Random price $5 - $55
-                decimal tax = Math.Round((decimal)(_random.NextDouble() * 5), 2); // Random tax $0 - $5
+                var name = SampleItemNames[_random.Next(SampleItemNames.Length)];
+                var price = Math.Round((decimal)(_random.NextDouble() * 50 + 5), 2); // Random price $5 - $55
+                var tax = Math.Round((decimal)(_random.NextDouble() * 5), 2); // decimal. Random tax $0 - $5
                 int quantity = _random.Next(1, 5); // Quantity between 1-4
 
                 var item = new Item(

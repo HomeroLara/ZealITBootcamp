@@ -1,3 +1,18 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using SimpleTaxReceiptGenerator.Services.Models;
+using SimpleTaxReceiptGenerator.Services;
 
-Console.WriteLine("Hello, World!");
+// var receipts = SimulatorService.GenerateReceipts(100,25);
+// var receiptService = new ReceiptService();
+// foreach (var receipt in receipts)
+// {
+//     var result = receiptService.GenerateReceiptTextWithString(receipt);
+//     Console.WriteLine(result);
+// }
+
+var receipts = SimulatorServiceImproved.GenerateReceipts(100, 25);
+var receiptService = new ReceiptService();
+foreach (var receipt in receipts)
+{
+    var result = receiptService.GenerateReceiptTextWithStringBuilder(receipt);
+    Console.WriteLine(result);
+}
