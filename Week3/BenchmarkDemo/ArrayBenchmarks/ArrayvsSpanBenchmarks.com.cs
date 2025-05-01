@@ -6,7 +6,7 @@ using BenchmarkDotNet.Order;
 using BenchmarkDotNet.Engines;
 
 namespace BenchmarkDemo;
-[SimpleJob(RunStrategy.ColdStart, launchCount: 50)]
+
 [MemoryDiagnoser] // tracks memory allocations
 [Orderer(SummaryOrderPolicy.FastestToSlowest)] // order the summary of results from fastest to slowest
 [RankColumn] // add a rank column to the summary table
@@ -18,10 +18,10 @@ public class ArrayvsSpanBenchmarks
     public void Setup()
     {
         // The array is pre - allocated in GlobalSetup, so it does not count as a benchmarked allocation.
-        _numbers = Enumerable.Range(1, 1000).ToArray();
+        _numbers = Enumerable.Range(1, 10000).ToArray();
     }
-
-    [Benchmark]
+    
+    [Benchmark(Baseline = true)]
     public int SumWithArray()
     {
         int sum = 0;

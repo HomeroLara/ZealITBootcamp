@@ -4,7 +4,6 @@ using BenchmarkDotNet.Order;
 
 namespace BenchmarkDemo;
 
-[SimpleJob(RunStrategy.ColdStart, launchCount:50)]
 [MemoryDiagnoser] // Tracks memory allocation
 [Orderer(SummaryOrderPolicy.FastestToSlowest)] // Orders results from fastest to slowest
 [RankColumn] // Adds ranking to results

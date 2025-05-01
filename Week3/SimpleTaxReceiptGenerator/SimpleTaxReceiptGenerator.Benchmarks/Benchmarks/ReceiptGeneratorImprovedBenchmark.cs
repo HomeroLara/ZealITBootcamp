@@ -28,7 +28,7 @@ public class ReceiptGeneratorImprovedBenchmark
     {
         foreach (var receipt in _receipts)
         {
-            var result = _receiptService.GenerateReceiptTextWithString(receipt);
+            var result = _receiptService.GenerateReceiptTextWithStringBuilder(receipt);
             Consume(result);
         }
     }

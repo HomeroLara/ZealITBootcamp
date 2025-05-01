@@ -16,10 +16,13 @@ class Program
     static void Main(string[] args)
     {
         var summaryConfig = DetailedConfig();
-        // BenchmarkRunner.Run<SimpleStringConcatenationBenchmarks>(summaryConfig);
-        // BenchmarkRunner.Run<LinqVsLoopBenchmarks>(summaryConfig);
+        // BenchmarkRunner is a utility class that scans a benchmark class
+        // (or assembly) and runs the benchmarks defined in it.
+        BenchmarkRunner.Run<SimpleStringConcatenationBenchmarks>(summaryConfig);
+        /// BenchmarkRunner.Run<LinqVsLoopBenchmarks>(summaryConfig);
         // BenchmarkRunner.Run<JsonSerializationBenchmarks>(summaryConfig);
-        BenchmarkRunner.Run<ArrayvsSpanBenchmarks>(summaryConfig);
+        // BenchmarkRunner.Run<ArrayvsSpanBenchmarks>(summaryConfig);
+        // BenchmarkRunner.Run<IterationBenchmarks>(summaryConfig);
     }
 
     /// <summary>
@@ -37,6 +40,8 @@ class Program
             .AddLogger(ConsoleLogger.Default)  // Default console logger
             .AddExporter(MarkdownExporter.GitHub) // Export as Markdown for GitHub
             .AddExporter(CsvExporter.Default) // Export as CSV
+            .AddExporter(HtmlExporter.Default)
+            .AddExporter(AsciiDocExporter.Default)
             .AddExporter(JsonExporter.Full); // Export as JSON
     }
 }
