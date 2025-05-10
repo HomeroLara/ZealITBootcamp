@@ -14,20 +14,30 @@ using ILogger = Microsoft.Extensions.Logging.ILogger;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-builder.Host.UseSerilog();
+// Log.Logger = new LoggerConfiguration()
+//     .MinimumLevel.Debug()
+//     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+//     .Enrich.FromLogContext()
+//     .WriteTo.Console()
+//     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+//     .CreateLogger();
+// builder.Host.UseSerilog();
 
+builder.Logging.ClearProviders();
 builder.Logging.AddOpenTelemetry(options =>
 {
+    options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("WebApplication1").AddAttributes(
+    [
+        new KeyValuePair<string, object>("deployment.environment", "dev")
+    ]));
     options.IncludeScopes = true;
     options.ParseStateValues = true;
-    options.AddConsoleExporter(); // Optional, to see logs in console
+    options.AddOtlpExporter(o =>
+    {
+        o.Endpoint = new Uri("http://localhost:5341/ingest/otlp/v1/logs");
+        o.Protocol = OtlpExportProtocol.HttpProtobuf;
+        o.Headers = "X-Seq-ApiKey=MQEG33to0nfJUu19cyej";
+    });
 });
 
 // Custom metrics for the application
@@ -80,7 +90,7 @@ otel.WithTracing(tracing =>
             options.Endpoint = new Uri("http://host.docker.internal:14268");
         });
         
-        tracing.AddConsoleExporter();
+       // tracing.AddConsoleExporter();
     }
     else
     {
@@ -104,7 +114,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 // Configure the Prometheus scraping endpoint
 app.MapPrometheusScrapingEndpoint();
-
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
 // Add custom middleware to log request and response payloads
 app.Use(async (context, next) =>
 {
@@ -112,7 +122,10 @@ app.Use(async (context, next) =>
     context.Request.EnableBuffering();
     var requestBody = await new StreamReader(context.Request.Body).ReadToEndAsync();
     context.Request.Body.Position = 0;
-    Log.Information("Request: {Method} {Path} {Body}", context.Request.Method, context.Request.Path, string.IsNullOrEmpty(requestBody) ? "No Body" : requestBody);
+    logger.LogInformation("Request: {Method} {Path} {Body}",
+        context.Request.Method,
+        context.Request.Path,
+        string.IsNullOrEmpty(requestBody) ? "No Body" : requestBody);
 
     // Capture the response body
     var originalBodyStream = context.Response.Body;
@@ -125,7 +138,9 @@ app.Use(async (context, next) =>
     context.Response.Body.Seek(0, SeekOrigin.Begin);
     var responseBodyText = await new StreamReader(context.Response.Body).ReadToEndAsync();
     context.Response.Body.Seek(0, SeekOrigin.Begin);
-    Log.Information("Response: {StatusCode} {Body}", context.Response.StatusCode, string.IsNullOrEmpty(responseBodyText) ? "No Body" : responseBodyText);
+    logger.LogInformation("Response: {StatusCode} {Body}",
+        context.Response.StatusCode,
+        string.IsNullOrEmpty(responseBodyText) ? "No Body" : responseBodyText);
 
     await responseBody.CopyToAsync(originalBodyStream);
 });
@@ -149,6 +164,7 @@ app.MapGet("/weatherforecast", ([FromServices] ILogger<Program> logger) =>
                 ))
             .ToArray();
 
+        logger.LogInformation("Retrieved {WeatherCount} weather forecasts", forecast.Length);
         // Increment the custom counter
         countweatherforecastRequests.Add(1);
         // Add a tag to the Activity

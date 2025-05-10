@@ -9,6 +9,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;using Prometheus;
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.OpenTelemetry;
 using HistogramConfiguration = Prometheus.HistogramConfiguration;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
@@ -21,15 +22,39 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .WriteTo.OpenTelemetry(options =>
+    {
+        options.ResourceAttributes = new Dictionary<string, object>
+        {
+            ["deployment.environment"] = "dev",
+            ["service.name"] = "MetricsDemo"
+        };
+        options.Endpoint = "http://localhost:5341/ingest/otlp/v1/logs";
+        options.Protocol = OtlpProtocol.HttpProtobuf;
+        options.Headers = new Dictionary<string, string>
+        {
+            ["X-Seq-ApiKey"] = "MQEG33to0nfJUu19cyej"
+        };
+    })
     .CreateLogger();
 builder.Host.UseSerilog();
-
-builder.Logging.AddOpenTelemetry(options =>
-{
-    options.IncludeScopes = true;
-    options.ParseStateValues = true;
-    options.AddConsoleExporter(); // Optional, to see logs in console
-});
+// builder.Logging.ClearProviders();
+// builder.Logging.AddOpenTelemetry(options =>
+// {
+//     options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("MetricsDemo").AddAttributes(
+//     [
+//         new KeyValuePair<string, object>("deployment.environment", "dev")
+//     ]));
+//     options.IncludeScopes = true;
+//     options.ParseStateValues = true;
+//     //options.AddConsoleExporter(); // Optional, to see logs in console
+//     options.AddOtlpExporter(o =>
+//     {
+//         o.Endpoint = new Uri("http://localhost:5341/ingest/otlp/v1/logs");
+//         o.Protocol = OtlpExportProtocol.HttpProtobuf;
+//         o.Headers = "X-Seq-ApiKey=MQEG33to0nfJUu19cyej";
+//     });
+// });
 
 
 var countweatherforecastRequests = Metrics
@@ -85,7 +110,12 @@ otel.WithTracing(tracing =>
         //    // otlpOptions.Protocol = OtlpExportProtocol.HttpProtobuf;
         //    otlpOptions.ExportProcessorType = ExportProcessorType.Simple;
         // });
-
+        tracing.AddOtlpExporter(otlpOptions =>
+        {
+            otlpOptions.Endpoint = new Uri(tracingOtlpEndpoint);
+            otlpOptions.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
+        });
+        
         tracing.AddJaegerExporter(options =>
         {
             options.Endpoint = new Uri("http://host.docker.internal:14268");
@@ -97,14 +127,6 @@ otel.WithTracing(tracing =>
     {
         tracing.AddConsoleExporter();
     }
-});
-
-builder.Logging.AddOpenTelemetry(options =>
-{
-    options.IncludeFormattedMessage = true;
-    options.IncludeScopes = true;
-    options.SetResourceBuilder(OpenTelemetry.Resources.ResourceBuilder.CreateDefault()
-        .AddService(builder.Environment.ApplicationName));
 });
 
 // Add services to the container.
@@ -131,6 +153,8 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
+var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
 // Add custom middleware to log request and response payloads
 app.Use(async (context, next) =>
 {
@@ -138,7 +162,10 @@ app.Use(async (context, next) =>
     context.Request.EnableBuffering();
     var requestBody = await new StreamReader(context.Request.Body).ReadToEndAsync();
     context.Request.Body.Position = 0;
-    Log.Information("Request: {Method} {Path} {Body}", context.Request.Method, context.Request.Path, string.IsNullOrEmpty(requestBody) ? "No Body" : requestBody);
+    logger.LogInformation("Request: {Method} {Path} {Body}",
+        context.Request.Method,
+        context.Request.Path,
+        string.IsNullOrEmpty(requestBody) ? "No Body" : requestBody);
 
     // Capture the response body
     var originalBodyStream = context.Response.Body;
@@ -151,30 +178,14 @@ app.Use(async (context, next) =>
     context.Response.Body.Seek(0, SeekOrigin.Begin);
     var responseBodyText = await new StreamReader(context.Response.Body).ReadToEndAsync();
     context.Response.Body.Seek(0, SeekOrigin.Begin);
-    Log.Information("Response: {StatusCode} {Body}", context.Response.StatusCode, string.IsNullOrEmpty(responseBodyText) ? "No Body" : responseBodyText);
+    logger.LogInformation("Response: {StatusCode} {Body}",
+        context.Response.StatusCode,
+        string.IsNullOrEmpty(responseBodyText) ? "No Body" : responseBodyText);
 
     await responseBody.CopyToAsync(originalBodyStream);
 });
 
-// app.MapGet("/weatherforecast", ([FromServices] ILogger<Program> logger) =>
-//     {
-//         logger.LogInformation("get weather forecast called");
-//         // Create a new Activity scoped to the method
-//         using var activity = weatherforecastActivitySource.StartActivity("WeatherforecastActivity");
-//         var forecast = Enumerable.Range(1, 5).Select(index =>
-//                 new WeatherForecast
-//                 (
-//                     DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-//                     Random.Shared.Next(-20, 55),
-//                     summaries[Random.Shared.Next(summaries.Length)]
-//                 ))
-//             .ToArray();
-//
-//         // Increment the custom counter
-//         countweatherforecastRequests.Add(1);
-//         return forecast;
-//     })
-//     .WithName("GetWeatherForecast");
+
 app.MapGet("/weatherforecast", async ([FromServices] ILogger<Program> logger) =>
     {
         using var activity = weatherforecastActivitySource.StartActivity("MetricsDemo.WeatherforecastActivity");
