@@ -18,8 +18,8 @@ Week2/WebApplication1/obj
 Week3/MetricsDemo/bin
 Week3/MetricsDemo/obj
 Week3/BenchmarkDemo/BenchmarkDotNet.Artifacts
-Week3/MetricsDemo/logs
-Week3/WebApplication1/logs
+Week4/MetricsDemo/logs
+Week4/WebApplication1/logs
 *.user
 Week6/ConsoleApp1/BenchmarkDotNet.Artifacts
 *.nettrace
