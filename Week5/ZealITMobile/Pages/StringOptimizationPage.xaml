@@ -22,6 +22,9 @@
                 FontAttributes="Bold"
                 HorizontalOptions="Center" />
 
+            <ActivityIndicator
+                IsRunning="{ Binding StringConcatIsBusy }"
+                IsVisible="{ Binding StringConcatIsBusy }"/>
             <Label 
                 Margin="0,0,0,10"
                 Text="{ Binding TestStringConcatenationResult }"
@@ -43,8 +46,8 @@
                 Command="{ Binding TestStringBuilderCommand }" />
 
             <ActivityIndicator
-                IsRunning="{ Binding IsBusy }"
-                IsVisible="{ Binding IsBusy }"/>
+                IsRunning="{ Binding SbIsBusy }"
+                IsVisible="{ Binding SbIsBusy }"/>
         </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

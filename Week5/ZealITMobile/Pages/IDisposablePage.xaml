@@ -11,22 +11,38 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
+        <ScrollView
+            Orientation="Vertical">
+            <VerticalStackLayout 
+                Padding="20" 
+                Spacing="15">
         
-        <VerticalStackLayout 
-            Padding="20" 
-            Spacing="15">
-        
-            <Label Text="Large Data Model IDisposable Example"
-                   FontSize="20"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center" />
+                <Label Text="Large Data Model IDisposable Example"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
 
-            <Button Text="Create LargeDataModel"
-                    Command="{ Binding CreateLargeDataModelCommand }" />
+                <Button Text="Create LargeDataModel"
+                        Command="{ Binding CreateLargeDataModelCommand }" />
+                <Label Text="{ Binding CreateLargeDataModelResult }"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" 
+                       Margin="10"/>
             
-            <Button Text="Wrap LargeDataModel in Using Statement"
-                    Command="{ Binding UsingStatementCommand }" />
-
-        </VerticalStackLayout>
+                <Button Text="Manual Dispose"
+                        Command="{ Binding ManualDisposeCommand }" />
+                <Label Text="{ Binding DisposeResult }"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" 
+                       Margin="10"/>
+            
+                <Button Text="Wrap LargeDataModel in Using Statement"
+                        Command="{ Binding UsingStatementCommand }" />
+                <Label Text="{ Binding UsingStatementResult }"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" 
+                       Margin="10"/>
+            </VerticalStackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

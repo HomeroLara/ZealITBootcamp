@@ -13,7 +13,7 @@ public partial class IDisposablePage : ContentPage
     {
         InitializeComponent();
     }
-
+    
     protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
     {
         base.OnNavigatedFrom(args);

@@ -25,7 +25,7 @@
 
             <Button 
                 Text="Get Status"
-                Command="{Binding AccessObjectsCommand}" />
+                Command="{Binding CreateWeakReferenceCommand}" />
 
             <Label 
                 Text="{Binding Message}"

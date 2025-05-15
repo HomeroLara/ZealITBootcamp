@@ -10,7 +10,10 @@ namespace ZealITMobile.ViewModels;
 public partial class StringOptimizationViewModel : ObservableObject
 {
     [ObservableProperty] 
-    private bool _isBusy;
+    private bool _stringConcatIsBusy;
+    
+    [ObservableProperty]
+    private bool _sbIsBusy;
         
     [ObservableProperty]
     private string _testStringConcatenationResult = "String Concatenation Time: 00:00:00";
@@ -21,27 +24,36 @@ public partial class StringOptimizationViewModel : ObservableObject
     [RelayCommand]
     public async Task TestStringConcatenation()
     {
-        IsBusy = true;
+        // long before = GC.GetTotalMemory(true);
+        // Console.WriteLine($"Approx memory used by ViewModel before string concat: {before} bytes");
+        StringConcatIsBusy = true;
         TestStringConcatenationResult = "Calculating string concatenation...";
         await Task.Delay(100); // Small delay to allow UI to update
-        var stopwatch = Stopwatch.StartNew();
-        StringTests.TestStringConcatenation(100000);
-        stopwatch.Stop();
-        TestStringConcatenationResult = $"String Concatenation Time: {stopwatch.ElapsedMilliseconds} ms";
-        IsBusy = false;
+        await Task.Run(() =>  {
+            var stopwatch = Stopwatch.StartNew();
+            StringTests.TestStringConcatenation(100000);
+            stopwatch.Stop();
+            TestStringConcatenationResult = $"String Concatenation Time: {stopwatch.ElapsedMilliseconds} ms";
+            StringConcatIsBusy = false;
+        });
+        // long after = GC.GetTotalMemory(true);
+        // Console.WriteLine($"Approx memory used by ViewModel: {after - before} bytes");
     }
 
     [RelayCommand]
     public async Task TestStringBuilder()
     {
-        IsBusy = true;
+        SbIsBusy = true;
         TestStringBuilderResult = "Calculating string builder...";
         await Task.Delay(100); // Small delay to allow UI to update
-        
-        var stopwatch = Stopwatch.StartNew();
-        StringTests.TestStringBuilder(100000);
-        stopwatch.Stop();
-        TestStringBuilderResult = $"StringBuilder Time: {stopwatch.ElapsedMilliseconds} ms";
-        IsBusy = false;
+        await Task.Delay(100); // Small delay to allow UI to update
+        await Task.Run(() =>
+        {
+            var stopwatch = Stopwatch.StartNew();
+            StringTests.TestStringBuilder(100000);
+            stopwatch.Stop();
+            TestStringBuilderResult = $"StringBuilder Time: {stopwatch.ElapsedMilliseconds} ms";
+            SbIsBusy = false;
+        });
     }
 }

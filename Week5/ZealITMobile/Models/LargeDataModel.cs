@@ -60,14 +60,22 @@ public class LargeDataModel : IDisposable
                 //     _someOtherDisposableObject.Dispose();
                 //     _someOtherDisposableObject = null; // Important: Set to null
                 // }
+                Console.WriteLine("LargeDataModel: Dispose(true) called. Managed resources can be safely accessed.");
             }
-            _data = null; // release the reference
+            
+            // Good practice to check for null before assignment
+            if (_data != null) 
+            {
+                Console.WriteLine($"LargeDataModel: Nulling reference to _data array of size {Size / (1024*1024)}MB.");
+                _data = null; 
+            }
             _disposed = true;
         }
     }
     
     /// <summary>
     /// The garbage collector runs finalizers at an unspecified time.
+    /// If Dispose() isn't called explicitly, the finalizer ensures _data is set to null
     /// </summary>
     ~LargeDataModel()
     {
