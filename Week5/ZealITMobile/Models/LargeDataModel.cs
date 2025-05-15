@@ -45,7 +45,7 @@ public class LargeDataModel : IDisposable
 
     
     /// <summary>
-    /// protected virtual dispose method.  Handles resource cleanup.
+    /// protected virtual dispose method. Handles resource cleanup.
     /// </summary>
     /// <param name="disposing">True if called from Dispose(), false if from the finalizer.</param>
     protected virtual void Dispose(bool disposing)
@@ -79,6 +79,6 @@ public class LargeDataModel : IDisposable
     /// </summary>
     ~LargeDataModel()
     {
-        Dispose(false);
+        Dispose(true);
     }
 }

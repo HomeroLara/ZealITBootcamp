@@ -71,7 +71,7 @@ public partial class IDisposableViewModel : ObservableObject, IDisposable
             _stringBuilder.AppendLine(memoryAfterDispose.Description);
             _stringBuilder.AppendLine();
         
-            _stringBuilder.AppendLine($"Memory allocated after ManualDispose (approx): {(memoryBeforeDispose.Memory - memoryAfterDispose.Memory) / 1024:N0} KB");
+            _stringBuilder.AppendLine($"Memory de-allocated after ManualDispose (approx): {(memoryBeforeDispose.Memory - memoryAfterDispose.Memory) / 1024:N0} KB");
             _stringBuilder.AppendLine();
             DisposeResult = _stringBuilder.ToString();
         }

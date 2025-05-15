@@ -14,6 +14,18 @@ public partial class EventMemoryLeakPage : ContentPage
         AddNewButton();
     }
 
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        if (BindingContext is EventMemoryLeakViewModel eventMemoryLeakViewModel)
+        {
+            // dispose of any resources when this view is no longer on top
+            eventMemoryLeakViewModel.Dispose();
+        }
+        
+        _dynamicButton.Clicked -= DynamicButtonOnClicked;
+    }
+
     private void AddNewButton()
     {
         _dynamicButton = new Button
@@ -24,10 +36,6 @@ public partial class EventMemoryLeakPage : ContentPage
         };
         _dynamicButton.Clicked += DynamicButtonOnClicked;
         MainStackLayout.Children.Add(_dynamicButton);
-        
-        // I typically avoid lambdas or anonymous methods as they can create a strong reference
-        // can lead to a memory leak. Instead, I register event handlers which make it a lot easier to avoid 
-        // memory leaks.
     }
 
     private void DynamicButtonOnClicked(object? sender, EventArgs e)
@@ -66,6 +74,5 @@ public partial class EventMemoryLeakPage : ContentPage
         // we do not need to worry about this event handler needing to be unregsitered
         // this is because the framework will automatically handles unregistering eveng handlers
         // that were wired up via markup
-        // NOTE: there are some gotchas in this scenario - we'll address those in class
     }
 }
