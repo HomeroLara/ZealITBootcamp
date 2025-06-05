@@ -8,10 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BenchmarkDotNet" Version="0.14.0" />
-      <PackageReference Include="JM.LinqFaster" Version="1.1.2" />
-      <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.3.0" />
-      <PackageReference Include="StructLinq" Version="0.28.2" />
+      <None Update="largefile.csv">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

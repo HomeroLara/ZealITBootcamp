@@ -1,50 +1,15 @@
 ﻿using System;
-using System.Diagnostics;
-using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
-
-public class ConsoleStartupBenchmark
-{
-    [Benchmark]
-    [IterationCount(100)]  // Limits the number of runs
-    public void ColdStart()
-    {
-        var stopwatch = Stopwatch.StartNew();
-
-        // Simulating Cold Start
-        var program = new SampleConsoleApp(); 
-
-        stopwatch.Stop();
-        Console.WriteLine($"Cold Start Time: {stopwatch.ElapsedMilliseconds} ms");
-    }
-
-    [Benchmark]
-    [IterationCount(100)]  // Limits the number of runs
-    public void WarmStart()
-    {
-        var stopwatch = Stopwatch.StartNew();
-
-        // Simulating Warm Start (Instance Reuse)
-        var program = SampleConsoleApp.Instance; 
-
-        stopwatch.Stop();
-        Console.WriteLine($"Warm Start Time: {stopwatch.ElapsedMilliseconds} ms");
-    }
-}
-
-// Simulating a simple console application with a singleton pattern
-public class SampleConsoleApp
-{
-    public static readonly SampleConsoleApp Instance = new SampleConsoleApp();
-
-    public SampleConsoleApp()
-    {
-        // Simulating initialization delay
-        System.Threading.Thread.Sleep(500);
-    }
-}
+using ConsoleApp1;
+using StructLinq;
 
 class Program
 {
-    static void Main() => BenchmarkRunner.Run<ConsoleStartupBenchmark>();
+    static void Main()
+    {
+        //Console.WriteLine($"PID: {Environment.ProcessId}");
+        //AdaptiveGcDemo.Run();
+        BenchmarkRunner.Run<CountByBenchmark>();
+        //BenchmarkRunner.Run<ConsoleStartupBenchmark>();
+    }
 }

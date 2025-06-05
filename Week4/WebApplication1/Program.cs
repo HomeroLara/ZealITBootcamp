@@ -168,7 +168,8 @@ app.MapGet("/weatherforecast", ([FromServices] ILogger<Program> logger) =>
         // Increment the custom counter
         countweatherforecastRequests.Add(1);
         // Add a tag to the Activity
-        activity?.SetTag("weatherforecast", "Hello World!");
+        activity?.SetTag("weatherforecast", "Hello World!!!!");
+        activity?.SetTag("Currency", "USD");
         return forecast;
     })
     .WithName("GetWeatherForecast");
